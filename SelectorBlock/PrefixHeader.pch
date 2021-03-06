@@ -1,0 +1,100 @@
+//
+//  PrefixHeader.pch
+//  SelectorBlock
+//
+//  Created by Jobs on 2021/2/18.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#if __has_include(<Masonry/Masonry.h>)
+#import <Masonry/Masonry.h>
+#else
+#import "Masonry.h"
+#endif
+
+#if __has_include(<WHToast/WHToast.h>)
+#import <WHToast/WHToast.h>
+#else
+#import "WHToast.h"
+#endif
+
+#if __has_include(<ReactiveObjC/ReactiveObjC.h>)
+#import <ReactiveObjC/ReactiveObjC.h>
+#else
+#import "ReactiveObjC.h"
+#endif
+
+#import "WHToast+DDToast.h"
+#import "AABlock.h"
+
+#define MainScreen          UIScreen.mainScreen.bounds.size
+#define Device_Width        MainScreen.width//获取屏幕宽高
+#define Device_Height       MainScreen.height
+#define SCREEN_WIDTH    Device_Width
+#define SCREEN_HEIGHT   Device_Height
+
+#define StringFormat(format,...) [NSString stringWithFormat:format, ##__VA_ARGS__]
+#define KWidth(width) (SCREEN_WIDTH / 375) * width //375 对应原型图的宽
+#define KHeight(height) (SCREEN_HEIGHT / 743) * height //743 对应原型图的高
+#define ReuseIdentifier NSStringFromClass ([self class])
+
+///随机颜色
+#define RandomColor [UIColor colorWithRed:arc4random_uniform(256) / 255.0 \
+green:arc4random_uniform(256) / 255.0 \
+blue:arc4random_uniform(256) / 255.0 \
+alpha:1] \
+
+#define SuppressWdeprecatedDeclarationsWarning(Stuff) \
+    do { \
+        _Pragma("clang diagnostic push") \
+        _Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"") \
+        Stuff; \
+        _Pragma("clang diagnostic pop") \
+} while (0)
+
+#pragma mark —— 状态栏高度：全面屏手机的状态栏高度为44pt，非全面屏手机的状态栏高度为20pt
+//方法一：状态栏高度
+static inline CGFloat rectOfStatusbar(){
+    SuppressWdeprecatedDeclarationsWarning(CGFloat RectOfStatusbar = 0.0f;
+                                           if (@available(iOS 13.0, *)){
+                                               id WINDOW = UIApplication.sharedApplication.windows.firstObject;
+                                               if ([WINDOW isKindOfClass:UIWindow.class]) {
+                                                   UIWindow *window = (UIWindow *)WINDOW;
+                                                   UIWindowScene *windowScene = window.windowScene;
+                                                   UIStatusBarManager *statusBarManager = windowScene.statusBarManager;
+                                                   if (statusBarManager.statusBarHidden == NO) {
+                                                       RectOfStatusbar = statusBarManager.statusBarFrame.size.height;
+                                       //                statusBarManager.statusBarFrame.mj_h
+                                                   }else{}
+                                               }
+                                           }else{
+                                               RectOfStatusbar = UIApplication.sharedApplication.statusBarFrame.size.height;
+                                           }return RectOfStatusbar);
+}
+//方法二：状态栏高度
+static inline CGFloat StatusBarHeight(){
+    return [[UIApplication sharedApplication] delegate].window.safeAreaInsets.top;
+}
+//导航栏高度
+static inline CGFloat NavigationHeight(){
+    NSLog(@"%f",StatusBarHeight());
+    return 44;
+}
+//导航栏高度 + 状态栏高度
+static inline CGFloat NavigationBarAndStatusBarHeight(){
+    return StatusBarHeight() + NavigationHeight();
+}
+
+static inline UIWindow * getMainWindow(){
+    UIWindow *window = nil;
+    window = UIApplication.sharedApplication.delegate.window;
+    return window;
+}
+
+#import "NSObject+Other.h"
+#import "UIView+Gesture.h"
+#import "UIViewController+BaseVC.h"
+
+#endif /* PrefixHeader_pch */

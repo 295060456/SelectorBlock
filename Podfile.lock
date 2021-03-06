@@ -1,0 +1,53 @@
+PODS:
+  - GKPhotoBrowser (2.1.5):
+    - GKPhotoBrowser/SD (= 2.1.5)
+  - GKPhotoBrowser/Core (2.1.5)
+  - GKPhotoBrowser/SD (2.1.5):
+    - GKPhotoBrowser/Core
+    - SDWebImage (~> 5.0)
+  - Masonry (1.1.0)
+  - MJRefresh (3.5.0)
+  - ReactiveObjC (3.1.1)
+  - SDWebImage (5.10.4):
+    - SDWebImage/Core (= 5.10.4)
+  - SDWebImage/Core (5.10.4)
+  - TABAnimated (2.5.2)
+  - WHToast (0.0.7)
+  - YYImage (1.0.4):
+    - YYImage/Core (= 1.0.4)
+  - YYImage/Core (1.0.4)
+
+DEPENDENCIES:
+  - GKPhotoBrowser
+  - Masonry
+  - MJRefresh
+  - ReactiveObjC
+  - SDWebImage
+  - TABAnimated
+  - WHToast
+  - YYImage
+
+SPEC REPOS:
+  trunk:
+    - GKPhotoBrowser
+    - Masonry
+    - MJRefresh
+    - ReactiveObjC
+    - SDWebImage
+    - TABAnimated
+    - WHToast
+    - YYImage
+
+SPEC CHECKSUMS:
+  GKPhotoBrowser: 3c91bc0d0e9bb4fae48d0ad04cbdc7b074058e64
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  MJRefresh: 6afc955813966afb08305477dd7a0d9ad5e79a16
+  ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
+  SDWebImage: c666b97e1fa9c64b4909816a903322018f0a9c84
+  TABAnimated: 3b7052d52db11e7b28cbea34777445356837a718
+  WHToast: 11a17a3f09f5f733e32bd6f3338919a448cbb719
+  YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
+
+PODFILE CHECKSUM: ee4f611a92551b19214dadeda9cdb96a7202e729
+
+COCOAPODS: 1.10.1
