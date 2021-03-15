@@ -29,10 +29,70 @@ UITableViewDelegate
     self.tableView.alpha = 1;
 }
 
+//-(void)touchesBegan:(NSSet<UITouch *> *)touches
+//          withEvent:(UIEvent *)event{
+//    NSLog(@"%@",self.navigationController);
+//    [self comingToVC:CheckMemFreeVC.new];
+//}
+
+// NSInvocation的使用，方法多参数传递
 -(void)touchesBegan:(NSSet<UITouch *> *)touches
           withEvent:(UIEvent *)event{
-    NSLog(@"%@",self.navigationController);
-    [self comingToVC:CheckMemFreeVC.new];
+    NSString *methodNameStr = @"test:withArg2:andArg3:block:";
+    SEL selector = NSSelectorFromString(methodNameStr);
+    /*
+     NSMethodSignature有两个常用的只读属性
+     a. numberOfArguments:方法参数的个数
+     b. methodReturnLength:方法返回值类型的长度，大于0表示有返回值
+     **/
+    NSMethodSignature *signature = [self methodSignatureForSelector:selector];
+    //或使用下面这种方式
+    //NSMethodSignature *signature = [[self class] instanceMethodSignatureForSelector:selector];
+    
+    //只能使用该方法来创建，不能使用alloc init
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+    invocation.target = self;
+    invocation.selector = selector;
+    
+    NSString *arg1 = @"a";
+    NSString *arg2 = @"b";
+    NSString *arg3 = @"c";
+    
+    MKDataBlock block = ^(id data){
+        NSLog(@"嗯，不错");
+    };
+
+    MKDataBlock arg4 = block;
+    /*
+     注意:
+     1、下标从2开始，因为0、1已经被target与selector占用
+     2、设置参数，必须传递参数的地址，不能直接传值
+     **/
+    [invocation setArgument:&arg1 atIndex:2];
+    [invocation setArgument:&arg2 atIndex:3];
+    [invocation setArgument:&arg3 atIndex:4];
+    [invocation setArgument:&arg4 atIndex:5];
+    // 执行方法
+    [invocation invoke];
+    
+    //可以在invoke方法前添加，也可以在invoke方法后添加
+    //通过方法签名的methodReturnLength判断是否有返回值
+    if (signature.methodReturnLength > 0) {
+        NSString *result = nil;
+        [invocation getReturnValue:&result];
+        NSLog(@"result = %@",result);
+    }
+}
+
+- (NSString *)test:(NSString *)arg1
+          withArg2:(NSString *)arg2
+           andArg3:(NSString *)arg3
+             block:(MKDataBlock)block{
+    NSLog(@"%@---%@---%@", arg1, arg2, arg3);
+    if (block) {
+        block(@"嗯！！");
+    }
+    return @"gaga";
 }
 #pragma mark —————————— UITableViewDelegate,UITableViewDataSource ——————————
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
