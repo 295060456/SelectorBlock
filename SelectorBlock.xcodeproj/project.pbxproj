@@ -39,6 +39,9 @@
 		C554322325F36173002D1CA6 /* NSString+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extras.m"; sourceTree = "<group>"; };
 		C554322925F3619C002D1CA6 /* NSObject+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Extras.h"; sourceTree = "<group>"; };
 		C554322A25F3619C002D1CA6 /* NSObject+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Extras.m"; sourceTree = "<group>"; };
+		C563211526084B6900822149 /* BaseViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewControllerProtocol.h; sourceTree = "<group>"; };
+		C563211626084B6900822149 /* BaseCellProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseCellProtocol.h; sourceTree = "<group>"; };
+		C563211726084B6900822149 /* BaseViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewProtocol.h; sourceTree = "<group>"; };
 		C564E58225DE59F90068C203 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		C564E58425DE59F90068C203 /* BaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
 		C564E58525DE59F90068C203 /* MKRankTBVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKRankTBVCell.h; sourceTree = "<group>"; };
@@ -162,6 +165,16 @@
 			path = "NSObject+Extras";
 			sourceTree = "<group>";
 		};
+		C563211426084B6900822149 /* BaseProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				C563211526084B6900822149 /* BaseViewControllerProtocol.h */,
+				C563211626084B6900822149 /* BaseCellProtocol.h */,
+				C563211726084B6900822149 /* BaseViewProtocol.h */,
+			);
+			path = BaseProtocol;
+			sourceTree = "<group>";
+		};
 		C564E58325DE59F90068C203 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +208,7 @@
 		C564E59625DE59F90068C203 /* 第三方封装 */ = {
 			isa = PBXGroup;
 			children = (
+				C563211426084B6900822149 /* BaseProtocol */,
 				C554322825F3619C002D1CA6 /* NSObject+Extras */,
 				C554322625F36177002D1CA6 /* NSString+Extras */,
 				C5542FCA25F3503D002D1CA6 /* NSObject+Other */,
