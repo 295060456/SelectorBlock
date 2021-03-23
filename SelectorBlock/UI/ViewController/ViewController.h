@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CheckMemFreeVC.h"
+#import "ButtonTimerVC.h"
 
 #import "BaseTableViewCell.h"
 #import "MKRankTBVCell.h"

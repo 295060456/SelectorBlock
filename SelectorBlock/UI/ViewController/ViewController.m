@@ -39,6 +39,8 @@ UITableViewDelegate
 -(void)touchesBegan:(NSSet<UITouch *> *)touches
           withEvent:(UIEvent *)event{
     
+    [self comingToVC:ButtonTimerVC.new];
+    
     NSString *arg1 = @"a";
     NSString *arg2 = @"b";
     NSString *arg3 = @"c";
