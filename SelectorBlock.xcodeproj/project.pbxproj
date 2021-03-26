@@ -34,6 +34,8 @@
 		C5B7BD112609B2E300BFF168 /* TimeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B7BD0F2609B2E300BFF168 /* TimeModel.m */; };
 		C5B7BD162609B30100BFF168 /* NSObject+Time.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B7BD152609B30100BFF168 /* NSObject+Time.m */; };
 		C5B7BD302609B83200BFF168 /* NSString+TimeFormatConvertFunc.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B7BD2F2609B83200BFF168 /* NSString+TimeFormatConvertFunc.m */; };
+		C5D8D254260CC44000BDAF76 /* toastLoading.gif in Resources */ = {isa = PBXBuildFile; fileRef = C5D8D253260CC44000BDAF76 /* toastLoading.gif */; };
+		C5D8D860260CC89300BDAF76 /* NSObject+DefConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D8D85E260CC89300BDAF76 /* NSObject+DefConfig.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +98,9 @@
 		C5B7BD152609B30100BFF168 /* NSObject+Time.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Time.m"; sourceTree = "<group>"; };
 		C5B7BD2E2609B83200BFF168 /* NSString+TimeFormatConvertFunc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+TimeFormatConvertFunc.h"; sourceTree = "<group>"; };
 		C5B7BD2F2609B83200BFF168 /* NSString+TimeFormatConvertFunc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+TimeFormatConvertFunc.m"; sourceTree = "<group>"; };
+		C5D8D253260CC44000BDAF76 /* toastLoading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = toastLoading.gif; sourceTree = "<group>"; };
+		C5D8D85E260CC89300BDAF76 /* NSObject+DefConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DefConfig.m"; sourceTree = "<group>"; };
+		C5D8D85F260CC89300BDAF76 /* NSObject+DefConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DefConfig.h"; sourceTree = "<group>"; };
 		C5E6504D25DE596100005817 /* SelectorBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SelectorBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5E6506125DE596100005817 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E26441F73BD6CD18EC58E7E2 /* Pods_SelectorBlock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SelectorBlock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,6 +156,7 @@
 		C5542FC025F34FE1002D1CA6 /* WHToast */ = {
 			isa = PBXGroup;
 			children = (
+				C5D8D253260CC44000BDAF76 /* toastLoading.gif */,
 				C5542FC225F34FE1002D1CA6 /* WHToast+DDToast.h */,
 				C5542FC125F34FE1002D1CA6 /* WHToast+DDToast.m */,
 			);
@@ -359,6 +365,7 @@
 		C5B7BCFF2609AC1600BFF168 /* NSObject */ = {
 			isa = PBXGroup;
 			children = (
+				C5D8D85D260CC89300BDAF76 /* NSObject+DefConfig */,
 				C5B7BD132609B30100BFF168 /* NSObject+Time */,
 				C5B7BD0E2609B2E300BFF168 /* NSObject (Time) */,
 				C5B7BCFA2609AC0D00BFF168 /* NSObject+RichText */,
@@ -394,6 +401,15 @@
 				C5B7BD152609B30100BFF168 /* NSObject+Time.m */,
 			);
 			path = "NSObject+Time";
+			sourceTree = "<group>";
+		};
+		C5D8D85D260CC89300BDAF76 /* NSObject+DefConfig */ = {
+			isa = PBXGroup;
+			children = (
+				C5D8D85E260CC89300BDAF76 /* NSObject+DefConfig.m */,
+				C5D8D85F260CC89300BDAF76 /* NSObject+DefConfig.h */,
+			);
+			path = "NSObject+DefConfig";
 			sourceTree = "<group>";
 		};
 		C5E6504425DE596100005817 = {
@@ -496,6 +512,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C564E5A025DE59F90068C203 /* Main.storyboard in Resources */,
+				C5D8D254260CC44000BDAF76 /* toastLoading.gif in Resources */,
 				C564E59E25DE59F90068C203 /* Assets.xcassets in Resources */,
 				C564E59F25DE59F90068C203 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -557,6 +574,7 @@
 				C564E59C25DE59F90068C203 /* ViewController.m in Sources */,
 				C564E59B25DE59F90068C203 /* BaseTableViewCell.m in Sources */,
 				C5B7BD302609B83200BFF168 /* NSString+TimeFormatConvertFunc.m in Sources */,
+				C5D8D860260CC89300BDAF76 /* NSObject+DefConfig.m in Sources */,
 				C564E5A325DE59F90068C203 /* AppDelegate.m in Sources */,
 				C5B7BCD62609AAB500BFF168 /* ButtonTimerVC.m in Sources */,
 				C5542FBD25F34F76002D1CA6 /* CheckMemFreeVC.m in Sources */,
