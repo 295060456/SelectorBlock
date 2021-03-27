@@ -25,7 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSTimerManager *timerManager;
 @property(nonatomic,assign)long count;// 倒计时
 @property(nonatomic,assign)ShowTimeType showTimeType;//时间显示风格
-@property(nonatomic,assign)CountDownBtnRunType btnRunType;/// 计时器启动模式
 @property(nonatomic,assign)CountDownBtnType countDownBtnType;/// 时间方向
 @property(nonatomic,assign)CountDownBtnNewLineType countDownBtnNewLineType;//是否换行。设置了这个属性仅仅对titleRuningStr有效，且在外层进行设置的时候需要用户手动加就换行符 \n
 @property(nonatomic,assign)CequenceForShowTitleRuningStrType cequenceForShowTitleRuningStrType;/// 文本显示类型

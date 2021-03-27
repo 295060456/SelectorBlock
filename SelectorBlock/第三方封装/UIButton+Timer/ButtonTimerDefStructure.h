@@ -28,10 +28,5 @@ typedef enum : NSUInteger {
     CequenceForShowTitleRuningStrType_front = 0,//TitleRuningStr（固定值） 相对于 currentTime（浮动值）在前面 | 首在前
     CequenceForShowTitleRuningStrType_tail//TitleRuningStr（固定值） 相对于 currentTime（浮动值）在后面 | 首在后
 } CequenceForShowTitleRuningStrType;
-/// 计时器启动模式
-typedef enum : NSUInteger {
-    CountDownBtnRunType_manual = 0,//手动触发计时器模式
-    CountDownBtnRunType_auto//自启动模式
-} CountDownBtnRunType;
 
 #endif /* ButtonTimerDefStructure_h */

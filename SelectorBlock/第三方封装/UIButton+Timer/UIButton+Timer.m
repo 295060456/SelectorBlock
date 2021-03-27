@@ -13,13 +13,15 @@ static char *UIButton_Timer_btnTimerConfig = "UIButton_Timer_btnTimerConfig";
 static char *UIButton_CountDownBtn_isDataStrMakeNewLine = "UIButton_CountDownBtn_isDataStrMakeNewLine";
 static char *UIButton_CountDownBtn_countDownBlock = "UIButton_CountDownBtn_countDownBlock";
 static char *UIButton_CountDownBtn_countDownClickEventBlock = "UIButton_CountDownBtn_countDownClickEventBlock";
-static char *UIButton_CountDownBtn_allowCountdownBlock = "UIButton_CountDownBtn_allowCountdownBlock";
+static char *UIButton_CountDownBtn_timerRunningBlock = "UIButton_CountDownBtn_timerRunningBlock";
+static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_timerFinishBlock";
 
 @dynamic btnTimerConfig;
 @dynamic isDataStrMakeNewLine;
 @dynamic countDownBlock;
 @dynamic countDownClickEventBlock;
-@dynamic allowCountdownBlock;
+@dynamic timerRunningBlock;
+@dynamic timerFinishBlock;
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-designated-initializers"
@@ -86,33 +88,21 @@ static char *UIButton_CountDownBtn_allowCountdownBlock = "UIButton_CountDownBtn_
             }
         }];
         // 通过外界的判断条件以后，方可执行倒计时操作
-        @weakify(config)
-        self.allowCountdownBlock = ^(NSNumber *data){
-            @strongify(self)
-            @strongify(config)
-            if (data.boolValue) {
-                if ((config.isCountDownClockFinished && config.btnRunType == CountDownBtnRunType_auto) ||//自启动模式
-                    config.btnRunType == CountDownBtnRunType_manual) {//手动启动模式
-                    config.isCountDownClockFinished = NO;
-                    config.isCountDownClockOpen = NO;
-                    
-                    [self timeFailBeginFrom:config.count];//根据需求来
-                }
-            }
-        };
+//        @weakify(config)
+//        self.allowCountdownBlock = ^(NSNumber *data){
+//            @strongify(self)
+//            @strongify(config)
+//            if (data.boolValue) {
+//                if ((config.isCountDownClockFinished && config.btnRunType == CountDownBtnRunType_auto) ||//自启动模式
+//                    config.btnRunType == CountDownBtnRunType_manual) {//手动启动模式
+//                    config.isCountDownClockFinished = NO;
+//                    config.isCountDownClockOpen = NO;
+//
+//                    [self timeFailBeginFrom:config.count];//根据需求来
+//                }
+//            }
+//        };
         
-        {
-            switch (config.btnRunType) {
-                case CountDownBtnRunType_manual:{//手动触发计时器模式
-
-                }break;
-                case CountDownBtnRunType_auto:{//自启动模式
-
-                }break;
-                default:
-                    break;
-            }
-        }
     }return self;
 }
 #pragma clang diagnostic pop
@@ -289,22 +279,49 @@ static char *UIButton_CountDownBtn_allowCountdownBlock = "UIButton_CountDownBtn_
     self.backgroundColor = self.btnTimerConfig.bgEndColor;
     [self.btnTimerConfig.timerManager nsTimeDestroy];
 }
-
+//点击事件回调，就不要用系统的addTarget/action/forControlEvents
 -(void)actionCountDownClickEventBlock:(MKDataBlock _Nullable)countDownClickEventBlock{
     self.countDownClickEventBlock = countDownClickEventBlock;
 }
-
+//倒计时需要触发调用的方法：倒计时的时候外面同时干的事，随着定时器走，可以不实现
 -(void)actionCountDownBlock:(MKDataBlock _Nullable)countDownBlock{
     self.countDownBlock = countDownBlock;
 }
-
--(void)actionAllowCountdownBlock:(MKDataBlock _Nullable)allowCountdownBlock{
-    self.allowCountdownBlock = allowCountdownBlock;
+// 定时器运行时的Block
+-(void)actionBlockTimerRunning:(MKDataBlock)timerRunningBlock{
+    self.timerRunningBlock = timerRunningBlock;
+}
+// 定时器结束时候的Block
+-(void)actionBlockTimerFinish:(MKDataBlock)timerFinishBlock{
+    self.timerFinishBlock = timerFinishBlock;
 }
 #pragma mark SET | GET
 #pragma mark —— @property(nonatomic,strong)ButtonTimerModel *btnTimerConfig;
 -(ButtonTimerConfigModel *)btnTimerConfig{
-    return objc_getAssociatedObject(self, UIButton_Timer_btnTimerConfig);
+    ButtonTimerConfigModel *BtnTimerConfig = objc_getAssociatedObject(self, UIButton_Timer_btnTimerConfig);
+    if (!BtnTimerConfig) {
+        BtnTimerConfig = ButtonTimerConfigModel.new;
+        // 这里添加默认配置
+        objc_setAssociatedObject(self,
+                                 UIButton_Timer_btnTimerConfig,
+                                 BtnTimerConfig,
+                                 OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    // 定时器运行时的Block
+    [BtnTimerConfig actionBlockTimerRunning:^(id data) {
+        NSLog(@"data = %@",data);
+        if (self.timerRunningBlock) {
+            self.timerRunningBlock(data);
+        }
+    }];
+    // 定时器结束时候的Block
+    [BtnTimerConfig actionBlockTimerFinish:^(id data) {
+        NSLog(@"死了 = %@",data);
+        if (self.timerFinishBlock) {
+            self.timerFinishBlock(data);
+        }
+    }];
+    return BtnTimerConfig;
 }
 
 -(void)setBtnTimerConfig:(ButtonTimerConfigModel *)btnTimerConfig{
@@ -346,15 +363,26 @@ static char *UIButton_CountDownBtn_allowCountdownBlock = "UIButton_CountDownBtn_
                              countDownClickEventBlock,
                              OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
-#pragma mark —— @property(nonatomic,copy)MKDataBlock allowCountdownBlock;
--(MKDataBlock)allowCountdownBlock{
-    return objc_getAssociatedObject(self, UIButton_CountDownBtn_allowCountdownBlock);
+#pragma mark —— @property(nonatomic,copy)MKDataBlock timerRunningBlock;// 定时器运行时的Block
+-(MKDataBlock)timerRunningBlock{
+    return objc_getAssociatedObject(self, UIButton_CountDownBtn_timerRunningBlock);
 }
 
--(void)setAllowCountdownBlock:(MKDataBlock)allowCountdownBlock{
+-(void)setTimerRunningBlock:(MKDataBlock)timerRunningBlock{
     objc_setAssociatedObject(self,
-                             UIButton_CountDownBtn_allowCountdownBlock,
-                             allowCountdownBlock,
+                             UIButton_CountDownBtn_timerRunningBlock,
+                             timerRunningBlock,
+                             OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+#pragma mark —— @property(nonatomic,copy)MKDataBlock timerFinishBlock;// 定时器结束时候的Block
+-(MKDataBlock)timerFinishBlock{
+    return objc_getAssociatedObject(self, UIButton_CountDownBtn_timerFinishBlock);
+}
+
+-(void)setTimerFinishBlock:(MKDataBlock)timerFinishBlock{
+    objc_setAssociatedObject(self,
+                             UIButton_CountDownBtn_timerFinishBlock,
+                             timerFinishBlock,
                              OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 

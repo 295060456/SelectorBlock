@@ -19,25 +19,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = UIColor.whiteColor;
     self.btn.alpha = 1;
 }
 
+/*
+ 定时器相关方法在btn和其配置文件中均对外表达抛出
+ */
+#pragma mark —— lazyLoad
 -(UIButton *)btn{
     if (!_btn) {
         _btn = [[UIButton alloc] initWithConfig:self.btnConfigModel];
         [self.view addSubview:_btn];
         _btn.frame = CGRectMake(100, 100, 100, 50);
-        //点击事件回调，就不要用系统的addTarget/action/forControlEvents
         @weakify(self)
+        // 点击事件回调
         [_btn actionCountDownClickEventBlock:^(id data) {
-            NSLog(@"");
+            NSLog(@"点击事件回调");
             @strongify(self)
             [self->_btn startTimer];// 可独立。不是说一点击就一定要开始计时，中间可能有业务判断逻辑
         }];
-        //倒计时需要触发调用的方法：倒计时的时候外面同时干的事，随着定时器走，可以不实现
+        // 倒计时需要触发调用的方法：倒计时的时候外面同时干的事，随着定时器走，可以不实现
         [_btn actionCountDownBlock:^(id data) {
-            NSLog(@"werty");
+            NSLog(@"倒计时需要触发调用的方法");
         }];
+        // 定时器运行时的Block
+        [_btn actionBlockTimerRunning:^(id data) {
+            NSLog(@"定时器运行时的Block");
+        }];
+        // 定时器结束时候的Block
+        [_btn actionBlockTimerFinish:^(id data) {
+            NSLog(@"定时器结束时候的Block");
+        }];
+        
     }return _btn;
 }
 
@@ -56,7 +70,6 @@
         _btnConfigModel.bgEndColor = UIColor.blueColor;
         _btnConfigModel.count = 10;//✅
         _btnConfigModel.showTimeType = ShowTimeType_HHMMSS;
-        _btnConfigModel.btnRunType = CountDownBtnRunType_auto;
         _btnConfigModel.countDownBtnType = CountDownBtnType_countDown;
         _btnConfigModel.countDownBtnNewLineType = CountDownBtnNewLineType_normal;
         _btnConfigModel.cequenceForShowTitleRuningStrType = CequenceForShowTitleRuningStrType_tail;
@@ -64,12 +77,13 @@
 //        _btnConfigModel.attributedString;
 //        _btnConfigModel.richTextRunningDataMutArr;
         
+        // 定时器运行时的Block
         [_btnConfigModel actionBlockTimerRunning:^(id data) {
-            NSLog(@"data = %@",data);
+//            NSLog(@"data = %@",data);
         }];
-        
+        // 定时器结束时候的Block
         [_btnConfigModel actionBlockTimerFinish:^(id data) {
-            NSLog(@"死了 = %@",data);
+//            NSLog(@"死了 = %@",data);
         }];
         
     }return _btnConfigModel;

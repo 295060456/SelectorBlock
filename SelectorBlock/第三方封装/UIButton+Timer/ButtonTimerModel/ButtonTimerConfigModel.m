@@ -9,8 +9,8 @@
 
 @interface ButtonTimerConfigModel ()
 
-@property(nonatomic,copy)MKDataBlock timerRunningBlock;
-@property(nonatomic,copy)MKDataBlock timerFinishBlock;
+@property(nonatomic,copy)MKDataBlock timerRunningBlock;// 定时器运行时的Block
+@property(nonatomic,copy)MKDataBlock timerFinishBlock;// 定时器结束时候的Block
 
 @end
 
