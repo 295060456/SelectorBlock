@@ -25,7 +25,7 @@
 		C564E5A525DE59F90068C203 /* UIView+Gesture.m in Sources */ = {isa = PBXBuildFile; fileRef = C564E59A25DE59F90068C203 /* UIView+Gesture.m */; };
 		C5B7BCD62609AAB500BFF168 /* ButtonTimerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B7BCD52609AAB500BFF168 /* ButtonTimerVC.m */; };
 		C5B7BCDC2609AB1500BFF168 /* UIButton+Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B7BCDB2609AB1500BFF168 /* UIButton+Timer.m */; };
-		C5B7BCE12609AB3900BFF168 /* ButtonTimerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B7BCE02609AB3900BFF168 /* ButtonTimerModel.m */; };
+		C5B7BCE12609AB3900BFF168 /* ButtonTimerConfigModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B7BCE02609AB3900BFF168 /* ButtonTimerConfigModel.m */; };
 		C5B7BCF52609AC0000BFF168 /* NSTimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B7BCEA2609AC0000BFF168 /* NSTimerManager.m */; };
 		C5B7BCF62609AC0000BFF168 /* GCD_TimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B7BCEC2609AC0000BFF168 /* GCD_TimerManager.m */; };
 		C5B7BCF72609AC0000BFF168 /* Nanosecond_TimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B7BCF02609AC0000BFF168 /* Nanosecond_TimerManager.m */; };
@@ -76,8 +76,8 @@
 		C5B7BCD52609AAB500BFF168 /* ButtonTimerVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonTimerVC.m; sourceTree = "<group>"; };
 		C5B7BCDA2609AB1500BFF168 /* UIButton+Timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+Timer.h"; sourceTree = "<group>"; };
 		C5B7BCDB2609AB1500BFF168 /* UIButton+Timer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Timer.m"; sourceTree = "<group>"; };
-		C5B7BCDF2609AB3900BFF168 /* ButtonTimerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonTimerModel.h; sourceTree = "<group>"; };
-		C5B7BCE02609AB3900BFF168 /* ButtonTimerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonTimerModel.m; sourceTree = "<group>"; };
+		C5B7BCDF2609AB3900BFF168 /* ButtonTimerConfigModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonTimerConfigModel.h; sourceTree = "<group>"; };
+		C5B7BCE02609AB3900BFF168 /* ButtonTimerConfigModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonTimerConfigModel.m; sourceTree = "<group>"; };
 		C5B7BCE42609AB8700BFF168 /* ButtonTimerDefStructure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonTimerDefStructure.h; sourceTree = "<group>"; };
 		C5B7BCE72609AC0000BFF168 /* TimerManager_DefineStructure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerManager_DefineStructure.h; sourceTree = "<group>"; };
 		C5B7BCE92609AC0000BFF168 /* NSTimerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTimerManager.h; sourceTree = "<group>"; };
@@ -298,8 +298,8 @@
 		C5B7BCDE2609AB2800BFF168 /* ButtonTimerModel */ = {
 			isa = PBXGroup;
 			children = (
-				C5B7BCDF2609AB3900BFF168 /* ButtonTimerModel.h */,
-				C5B7BCE02609AB3900BFF168 /* ButtonTimerModel.m */,
+				C5B7BCDF2609AB3900BFF168 /* ButtonTimerConfigModel.h */,
+				C5B7BCE02609AB3900BFF168 /* ButtonTimerConfigModel.m */,
 			);
 			path = ButtonTimerModel;
 			sourceTree = "<group>";
@@ -570,7 +570,7 @@
 				C5B7BD162609B30100BFF168 /* NSObject+Time.m in Sources */,
 				C5542FC325F34FE1002D1CA6 /* WHToast+DDToast.m in Sources */,
 				C5542FC725F35032002D1CA6 /* UIViewController+BaseVC.m in Sources */,
-				C5B7BCE12609AB3900BFF168 /* ButtonTimerModel.m in Sources */,
+				C5B7BCE12609AB3900BFF168 /* ButtonTimerConfigModel.m in Sources */,
 				C564E59C25DE59F90068C203 /* ViewController.m in Sources */,
 				C564E59B25DE59F90068C203 /* BaseTableViewCell.m in Sources */,
 				C5B7BD302609B83200BFF168 /* NSString+TimeFormatConvertFunc.m in Sources */,

@@ -23,7 +23,7 @@ static char *UIButton_CountDownBtn_allowCountdownBlock = "UIButton_CountDownBtn_
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-designated-initializers"
-- (instancetype)initWithConfig:(ButtonTimerModel *_Nonnull)config{
+- (instancetype)initWithConfig:(ButtonTimerConfigModel *_Nonnull)config{
     if (self = [super init]) {
         self.btnTimerConfig = config;
         {
@@ -127,6 +127,10 @@ static char *UIButton_CountDownBtn_allowCountdownBlock = "UIButton_CountDownBtn_
               forState:UIControlStateNormal];
     }
 }
+//开启倒计时
+-(void)startTimer{
+    [self timeFailBeginFrom:self.btnTimerConfig.count];
+}
 //倒计时方法:
 - (void)timeFailBeginFrom:(NSInteger)timeCount {
     
@@ -145,9 +149,9 @@ static char *UIButton_CountDownBtn_allowCountdownBlock = "UIButton_CountDownBtn_
 //    [NSTimerManager nsTimeStart:self.nsTimerManager
 //                    withRunLoop:nil];
     //启动方式——2
-    [self.btnTimerConfig.nsTimerManager nsTimeStartSysAutoInRunLoop];
+    [self.btnTimerConfig.timerManager nsTimeStartSysAutoInRunLoop];
 }
-//
+//？？？？？？？？？？？？？？？？
 - (void)timerRuning:(long)currentTime {
     //其他一些基础设置
     {
@@ -283,7 +287,7 @@ static char *UIButton_CountDownBtn_allowCountdownBlock = "UIButton_CountDownBtn_
     NSLog(@"self.btnTimerConfig.finalTitleStr = %@",self.btnTimerConfig.finalTitleStr);
     [self setTitleOrAttributedTitle];
     self.backgroundColor = self.btnTimerConfig.bgEndColor;
-    [self.btnTimerConfig.nsTimerManager nsTimeDestroy];
+    [self.btnTimerConfig.timerManager nsTimeDestroy];
 }
 
 -(void)actionCountDownClickEventBlock:(MKDataBlock _Nullable)countDownClickEventBlock{
@@ -299,11 +303,11 @@ static char *UIButton_CountDownBtn_allowCountdownBlock = "UIButton_CountDownBtn_
 }
 #pragma mark SET | GET
 #pragma mark —— @property(nonatomic,strong)ButtonTimerModel *btnTimerConfig;
--(ButtonTimerModel *)btnTimerConfig{
+-(ButtonTimerConfigModel *)btnTimerConfig{
     return objc_getAssociatedObject(self, UIButton_Timer_btnTimerConfig);
 }
 
--(void)setBtnTimerConfig:(ButtonTimerModel *)btnTimerConfig{
+-(void)setBtnTimerConfig:(ButtonTimerConfigModel *)btnTimerConfig{
     objc_setAssociatedObject(self,
                              UIButton_Timer_btnTimerConfig,
                              btnTimerConfig,
