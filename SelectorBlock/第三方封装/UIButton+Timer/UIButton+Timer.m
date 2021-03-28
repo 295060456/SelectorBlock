@@ -28,57 +28,9 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
 - (instancetype)initWithConfig:(ButtonTimerConfigModel *_Nonnull)config{
     if (self = [super init]) {
         self.btnTimerConfig = config;
-        {
-            self.layer.borderColor = config.layerBorderColor.CGColor;
-            self.layer.cornerRadius = config.layerCornerRadius;
-            self.layer.borderWidth = config.layerBorderWidth;
-        }
-        
-        if (config.countDownBtnNewLineType) {
-            self.titleLabel.numberOfLines = 0;
-        }
-        
-        if (config.countDownBtnType) {
-            if (!config.isCountDownClockOpen) {
-                switch (config.countDownBtnNewLineType) {
-                    case CountDownBtnNewLineType_normal:{
-                        if (config.isCountDown) {
-                            [self setTitle:config.titleRuningStr
-                                  forState:UIControlStateNormal];
-                        }else{
-                            [self setTitle:config.titleBeginStr
-                                  forState:UIControlStateNormal];
-                        }
-                    }break;
-                    case CountDownBtnNewLineType_newLine:{
-                        config.finalTitleStr = [config.titleBeginStr stringByAppendingString:@"\n"];
-                        NSLog(@"self.finalTitleStr = %@",config.finalTitleStr);
-                        [self setTitleOrAttributedTitle];
-                    }break;
-                        
-                    default:
-                        break;
-                }
-            }
-        }
-        
-        {
-            if (config.richTextRunningDataMutArr.count) {
-                config.attributedString = [NSObject makeRichTextWithDataConfigMutArr:config.richTextRunningDataMutArr];
-                [self setAttributedTitle:config.attributedString
-                                forState:UIControlStateNormal];
-            }else{
-                [self setTitle:config.titleBeginStr
-                      forState:UIControlStateNormal];
-            }
-            
-            self.titleLabel.textAlignment = NSTextAlignmentCenter;
-            self.titleLabel.font = config.titleLabelFont;
-            [self setTitleColor:config.titleColor
-                       forState:UIControlStateNormal];
-            [self.titleLabel sizeToFit];
-            self.titleLabel.adjustsFontSizeToFitWidth = YES;
-        }
+        [self setLayerConfigReadyPlay];
+        [self setTitleReadyPlay];
+        [self setTitleLabelConfigReadyPlay];
         // CountDownBtn 的点击事件回调
         @weakify(self)
         [[self rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIButton * _Nullable x) {
@@ -87,51 +39,114 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
                 self.countDownClickEventBlock(self);
             }
         }];
-        // 通过外界的判断条件以后，方可执行倒计时操作
-//        @weakify(config)
-//        self.allowCountdownBlock = ^(NSNumber *data){
-//            @strongify(self)
-//            @strongify(config)
-//            if (data.boolValue) {
-//                if ((config.isCountDownClockFinished && config.btnRunType == CountDownBtnRunType_auto) ||//自启动模式
-//                    config.btnRunType == CountDownBtnRunType_manual) {//手动启动模式
-//                    config.isCountDownClockFinished = NO;
-//                    config.isCountDownClockOpen = NO;
-//
-//                    [self timeFailBeginFrom:config.count];//根据需求来
-//                }
-//            }
-//        };
-        
     }return self;
 }
 #pragma clang diagnostic pop
-/// 设置普通标题或者富文本标题
--(void)setTitleOrAttributedTitle{
-    if (self.btnTimerConfig.richTextRunningDataMutArr.count) {
+#pragma mark —— UI配置
+/// 计时器未开始
+-(void)setLayerConfigReadyPlay{
+    self.layer.borderColor = self.btnTimerConfig.layerBorderReadyPlayCor.CGColor;
+    self.layer.cornerRadius = self.btnTimerConfig.layerCornerReadyPlayRadius;
+    self.layer.borderWidth = self.btnTimerConfig.layerBorderReadyPlayWidth;
+}
+
+-(void)setTitleLabelConfigReadyPlay{
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.numberOfLines = self.btnTimerConfig.countDownBtnNewLineType;
+    self.titleLabel.font = self.btnTimerConfig.titleLabelReadyPlayFont;
+    [self setTitleColor:self.btnTimerConfig.titleReadyPlayCor
+               forState:UIControlStateNormal];
+    [self.titleLabel sizeToFit];
+    self.titleLabel.adjustsFontSizeToFitWidth = YES;
+}
+/// 计时器进行中
+-(void)setLayerConfigRunning{
+    self.layer.borderColor = self.btnTimerConfig.layerBorderRunningCor.CGColor;
+    self.layer.cornerRadius = self.btnTimerConfig.layerCornerRunningRadius;
+    self.layer.borderWidth = self.btnTimerConfig.layerBorderRunningWidth;
+}
+
+-(void)setTitleLabelConfigRunning{
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.numberOfLines = self.btnTimerConfig.countDownBtnNewLineType;
+    self.titleLabel.font = self.btnTimerConfig.titleLabelRunningFont;
+    [self setTitleColor:self.btnTimerConfig.titleRunningCor
+               forState:UIControlStateNormal];
+    [self.titleLabel sizeToFit];
+    self.titleLabel.adjustsFontSizeToFitWidth = YES;
+}
+/// 计时器结束
+-(void)setLayerConfigEnd{
+    self.layer.borderColor = self.btnTimerConfig.layerBorderEndCor.CGColor;
+    self.layer.cornerRadius = self.btnTimerConfig.layerCornerEndRadius;
+    self.layer.borderWidth = self.btnTimerConfig.layerBorderEndWidth;
+}
+
+-(void)setTitleLabelConfigEnd{
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.numberOfLines = self.btnTimerConfig.countDownBtnNewLineType;
+    self.titleLabel.font = self.btnTimerConfig.titleLabelEndFont;
+    [self setTitleColor:self.btnTimerConfig.titleEndCor
+               forState:UIControlStateNormal];
+    [self.titleLabel sizeToFit];
+    self.titleLabel.adjustsFontSizeToFitWidth = YES;
+}
+#pragma mark —— 设置普通标题或者富文本标题
+/// 计时器未开始
+-(void)setTitleReadyPlay{
+    if (self.btnTimerConfig.titleReadyPlayAttributedDataMutArr.count ||
+        self.btnTimerConfig.titleReadyPlayAttributedStr) {
         //富文本
-        [self setAttributedTitle:self.btnTimerConfig.attributedString
+        [self setAttributedTitle:self.btnTimerConfig.titleReadyPlayAttributedStr
                         forState:UIControlStateNormal];
     }else{
-        [self setTitle:self.btnTimerConfig.finalTitleStr
+        [self setTitle:self.btnTimerConfig.titleReadyPlayStr
               forState:UIControlStateNormal];
     }
 }
+/// 计时器进行中
+-(void)setTitleRunning{
+    if (self.btnTimerConfig.titleRunningDataMutArr.count ||
+        self.btnTimerConfig.titleRunningAttributedStr) {
+        //富文本
+        [self setAttributedTitle:self.btnTimerConfig.titleRunningAttributedStr
+                        forState:UIControlStateNormal];
+    }else{
+//        [self setTitle:self.btnTimerConfig.finalTitleStr
+//              forState:UIControlStateNormal];
+        [self setTitle:self.btnTimerConfig.titleRunningStr
+              forState:UIControlStateNormal];
+    }
+}
+/// 计时器结束
+-(void)setTitleEnd{
+    if (self.btnTimerConfig.titleEndDataMutArr.count ||
+        self.btnTimerConfig.titleEndAttributedStr) {
+        //富文本
+        [self setAttributedTitle:self.btnTimerConfig.titleRunningAttributedStr
+                        forState:UIControlStateNormal];
+    }else{
+        [self setTitle:self.btnTimerConfig.titleEndStr
+              forState:UIControlStateNormal];
+    }
+}
+#pragma mark —— 时间方法
 //开启倒计时
 -(void)startTimer{
     [self timeFailBeginFrom:self.btnTimerConfig.count];
 }
 //倒计时方法:
-- (void)timeFailBeginFrom:(NSInteger)timeCount {
+-(void)timeFailBeginFrom:(NSInteger)timeCount{
     
     if (self.btnTimerConfig.countDownBtnNewLineType == CountDownBtnNewLineType_newLine) {
-        self.btnTimerConfig.finalTitleStr = [self.btnTimerConfig.titleBeginStr stringByAppendingString:@"\n"];
+        self.btnTimerConfig.finalTitleStr = [self.btnTimerConfig.titleReadyPlayStr stringByAppendingString:@"\n"];
         NSLog(@"self.finalTitleStr = %@",self.btnTimerConfig.finalTitleStr);
     }
 
-    [self setTitleOrAttributedTitle];
-    
-    self.btnTimerConfig.countDownBtnType = CountDownBtnType_countDown;
+    [self setTitleReadyPlay];
+    [self setLayerConfigReadyPlay];
+    [self setTitleLabelConfigReadyPlay];
+    self.btnTimerConfig.countDownBtnType = TimerStyle_anticlockwise;
     self.btnTimerConfig.count = timeCount;
     self.enabled = NO;
     
@@ -141,12 +156,12 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
     //启动方式——2
     [self.btnTimerConfig.timerManager nsTimeStartSysAutoInRunLoop];
 }
-//？？？？？？？？？？？？？？？？
-- (void)timerRuning:(long)currentTime {
+
+-(void)timerRuning:(long)currentTime {
     //其他一些基础设置
     {
         self.enabled = self.btnTimerConfig.isCanBeClickWhenTimerCycle;//倒计时期间，默认不接受任何的点击事件
-        self.backgroundColor = self.btnTimerConfig.bgCountDownColor;
+        self.backgroundColor = self.btnTimerConfig.bgRunningCor;
     }
     
     //显示数据的二次封装
@@ -157,10 +172,10 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
                 self.btnTimerConfig.formatTimeStr = [NSString stringWithFormat:@"%ld秒",(long)currentTime];
             }break;
             case ShowTimeType_MMSS:{
-                self.btnTimerConfig.formatTimeStr = [[NSString stringWithFormat:@"%ld",(long)currentTime] getMMSS];
+                self.btnTimerConfig.formatTimeStr = [NSObject getMMSSFromStr:[NSString stringWithFormat:@"%ld",(long)currentTime]];
             }break;
             case ShowTimeType_HHMMSS:{
-                self.btnTimerConfig.formatTimeStr = [[NSString stringWithFormat:@"%ld",(long)currentTime] getHHMMSS];
+                self.btnTimerConfig.formatTimeStr = [NSObject getHHMMSSFromStr:[NSString stringWithFormat:@"%ld",(long)currentTime]];
             }break;
             default:
                 self.btnTimerConfig.formatTimeStr = @"异常值";
@@ -172,43 +187,43 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
                 if (self.btnTimerConfig.countDownBtnNewLineType == CountDownBtnNewLineType_newLine){//提行
                     
                     if (!self.isDataStrMakeNewLine) {
-                        self.btnTimerConfig.titleRuningStr = [self.btnTimerConfig.titleRuningStr stringByAppendingString:@"\n"];
+                        self.btnTimerConfig.titleRunningStr = [self.btnTimerConfig.titleRunningStr stringByAppendingString:@"\n"];
                         self.isDataStrMakeNewLine = YES;
                     }
                 }
-                self.btnTimerConfig.finalTitleStr = [self.btnTimerConfig.titleRuningStr stringByAppendingString:self.btnTimerConfig.formatTimeStr];
+                self.btnTimerConfig.finalTitleStr = [self.btnTimerConfig.titleRunningStr stringByAppendingString:self.btnTimerConfig.formatTimeStr];
             }break;
             case CequenceForShowTitleRuningStrType_tail:{//首在后
                 if (self.btnTimerConfig.countDownBtnNewLineType == CountDownBtnNewLineType_newLine) {//提行
                     self.btnTimerConfig.formatTimeStr = [self.btnTimerConfig.formatTimeStr stringByAppendingString:@"\n"];//每次都要刷新，所以不必用isDataStrMakeNewLine来进行约束是否加\n
                 }
-                self.btnTimerConfig.finalTitleStr = [self.btnTimerConfig.formatTimeStr stringByAppendingString:self.btnTimerConfig.titleRuningStr];
+                self.btnTimerConfig.finalTitleStr = [self.btnTimerConfig.formatTimeStr stringByAppendingString:self.btnTimerConfig.titleRunningStr];
             }break;
             default:
                 self.btnTimerConfig.finalTitleStr = @"异常值";
                 break;
         }
     }
-    NSLog(@"%@",self.btnTimerConfig.titleRuningStr);
+    NSLog(@"%@",self.btnTimerConfig.titleRunningStr);
     NSLog(@"%@",self.btnTimerConfig.formatTimeStr);
     NSLog(@"self.finalTitleStr = %@",self.btnTimerConfig.finalTitleStr);
-    if(self.btnTimerConfig.richTextRunningDataMutArr.count){
+    if(self.btnTimerConfig.titleReadyPlayAttributedDataMutArr.count){
         //富文本 每一次时间触发方法都刷新数据并赋值
         NSMutableArray *tempDataMutArr = NSMutableArray.array;
         RichLabelDataStringsModel *formatTimeModel = RichLabelDataStringsModel.new;
         RichLabelDataStringsModel *titleRuningModel = RichLabelDataStringsModel.new;
 
-        for (int i = 0; i < self.btnTimerConfig.richTextRunningDataMutArr.count; i ++) {
-            RichLabelDataStringsModel *richLabelDataStringsModel = self.btnTimerConfig.richTextRunningDataMutArr[i];
+        for (int i = 0; i < self.btnTimerConfig.titleReadyPlayAttributedDataMutArr.count; i ++) {
+            RichLabelDataStringsModel *richLabelDataStringsModel = self.btnTimerConfig.titleReadyPlayAttributedDataMutArr[i];
 
             if (i == 0) {
                 //修改range
                 if (self.btnTimerConfig.cequenceForShowTitleRuningStrType == CequenceForShowTitleRuningStrType_front) {
-                    richLabelDataStringsModel.richLabelFontModel.range = NSMakeRange(0, self.btnTimerConfig.titleRuningStr.length);
-                    richLabelDataStringsModel.richLabelTextCorModel.range = NSMakeRange(0, self.btnTimerConfig.titleRuningStr.length);
-                    richLabelDataStringsModel.richLabelUnderlineModel.range = NSMakeRange(0, self.btnTimerConfig.titleRuningStr.length);
-                    richLabelDataStringsModel.richLabelParagraphStyleModel.range = NSMakeRange(0, self.btnTimerConfig.titleRuningStr.length);
-                    richLabelDataStringsModel.richLabelURLModel.range = NSMakeRange(0, self.btnTimerConfig.titleRuningStr.length);
+                    richLabelDataStringsModel.richLabelFontModel.range = NSMakeRange(0, self.btnTimerConfig.titleRunningStr.length);
+                    richLabelDataStringsModel.richLabelTextCorModel.range = NSMakeRange(0, self.btnTimerConfig.titleRunningStr.length);
+                    richLabelDataStringsModel.richLabelUnderlineModel.range = NSMakeRange(0, self.btnTimerConfig.titleRunningStr.length);
+                    richLabelDataStringsModel.richLabelParagraphStyleModel.range = NSMakeRange(0, self.btnTimerConfig.titleRunningStr.length);
+                    richLabelDataStringsModel.richLabelURLModel.range = NSMakeRange(0, self.btnTimerConfig.titleRunningStr.length);
                 }else if (self.btnTimerConfig.cequenceForShowTitleRuningStrType == CequenceForShowTitleRuningStrType_tail){
                     richLabelDataStringsModel.richLabelFontModel.range = NSMakeRange(0, self.btnTimerConfig.formatTimeStr.length);
                     richLabelDataStringsModel.richLabelTextCorModel.range = NSMakeRange(0, self.btnTimerConfig.formatTimeStr.length);
@@ -228,20 +243,20 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
                 
                 //修改range
                 if (self.btnTimerConfig.cequenceForShowTitleRuningStrType == CequenceForShowTitleRuningStrType_front) {
-                    richLabelDataStringsModel.richLabelFontModel.range = NSMakeRange(self.btnTimerConfig.titleRuningStr.length, self.btnTimerConfig.formatTimeStr.length);
-                    richLabelDataStringsModel.richLabelTextCorModel.range = NSMakeRange(self.btnTimerConfig.titleRuningStr.length, self.btnTimerConfig.formatTimeStr.length);
-                    richLabelDataStringsModel.richLabelUnderlineModel.range = NSMakeRange(self.btnTimerConfig.titleRuningStr.length, self.btnTimerConfig.formatTimeStr.length);
-                    richLabelDataStringsModel.richLabelParagraphStyleModel.range = NSMakeRange(self.btnTimerConfig.titleRuningStr.length, self.btnTimerConfig.formatTimeStr.length);
-                    richLabelDataStringsModel.richLabelURLModel.range = NSMakeRange(self.btnTimerConfig.titleRuningStr.length, self.btnTimerConfig.formatTimeStr.length);
+                    richLabelDataStringsModel.richLabelFontModel.range = NSMakeRange(self.btnTimerConfig.titleRunningStr.length, self.btnTimerConfig.formatTimeStr.length);
+                    richLabelDataStringsModel.richLabelTextCorModel.range = NSMakeRange(self.btnTimerConfig.titleRunningStr.length, self.btnTimerConfig.formatTimeStr.length);
+                    richLabelDataStringsModel.richLabelUnderlineModel.range = NSMakeRange(self.btnTimerConfig.titleRunningStr.length, self.btnTimerConfig.formatTimeStr.length);
+                    richLabelDataStringsModel.richLabelParagraphStyleModel.range = NSMakeRange(self.btnTimerConfig.titleRunningStr.length, self.btnTimerConfig.formatTimeStr.length);
+                    richLabelDataStringsModel.richLabelURLModel.range = NSMakeRange(self.btnTimerConfig.titleRunningStr.length, self.btnTimerConfig.formatTimeStr.length);
                 }else if (self.btnTimerConfig.cequenceForShowTitleRuningStrType == CequenceForShowTitleRuningStrType_tail){
-                    richLabelDataStringsModel.richLabelFontModel.range = NSMakeRange(self.btnTimerConfig.formatTimeStr.length, self.btnTimerConfig.titleRuningStr.length);
-                    richLabelDataStringsModel.richLabelTextCorModel.range = NSMakeRange(self.btnTimerConfig.formatTimeStr.length, self.btnTimerConfig.titleRuningStr.length);
-                    richLabelDataStringsModel.richLabelUnderlineModel.range = NSMakeRange(self.btnTimerConfig.formatTimeStr.length, self.btnTimerConfig.titleRuningStr.length);
-                    richLabelDataStringsModel.richLabelParagraphStyleModel.range = NSMakeRange(self.btnTimerConfig.formatTimeStr.length, self.btnTimerConfig.titleRuningStr.length);
-                    richLabelDataStringsModel.richLabelURLModel.range = NSMakeRange(self.btnTimerConfig.formatTimeStr.length, self.btnTimerConfig.titleRuningStr.length);
+                    richLabelDataStringsModel.richLabelFontModel.range = NSMakeRange(self.btnTimerConfig.formatTimeStr.length, self.btnTimerConfig.titleRunningStr.length);
+                    richLabelDataStringsModel.richLabelTextCorModel.range = NSMakeRange(self.btnTimerConfig.formatTimeStr.length, self.btnTimerConfig.titleRunningStr.length);
+                    richLabelDataStringsModel.richLabelUnderlineModel.range = NSMakeRange(self.btnTimerConfig.formatTimeStr.length, self.btnTimerConfig.titleRunningStr.length);
+                    richLabelDataStringsModel.richLabelParagraphStyleModel.range = NSMakeRange(self.btnTimerConfig.formatTimeStr.length, self.btnTimerConfig.titleRunningStr.length);
+                    richLabelDataStringsModel.richLabelURLModel.range = NSMakeRange(self.btnTimerConfig.formatTimeStr.length, self.btnTimerConfig.titleRunningStr.length);
                 }else{}
                 
-                titleRuningModel.dataString = self.btnTimerConfig.titleRuningStr;
+                titleRuningModel.dataString = self.btnTimerConfig.titleRunningStr;
                 titleRuningModel.richLabelFontModel = richLabelDataStringsModel.richLabelFontModel;
                 titleRuningModel.richLabelTextCorModel = richLabelDataStringsModel.richLabelTextCorModel;
                 titleRuningModel.richLabelUnderlineModel = richLabelDataStringsModel.richLabelUnderlineModel;
@@ -262,23 +277,27 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
             default:
                 break;
         }
-        self.btnTimerConfig.attributedString = [NSObject makeRichTextWithDataConfigMutArr:tempDataMutArr];
+        self.btnTimerConfig.titleReadyPlayAttributedStr = [NSObject makeRichTextWithDataConfigMutArr:tempDataMutArr];
     }
-    [self setTitleOrAttributedTitle];
+    [self setTitleRunning];
+    [self setLayerConfigRunning];
+    [self setTitleLabelConfigRunning];
 }
 
 -(void)timerDestroy{
     self.enabled = YES;
-    self.btnTimerConfig.isCountDownClockFinished = YES;
     if (self.btnTimerConfig.countDownBtnNewLineType == CountDownBtnNewLineType_newLine) {
         self.btnTimerConfig.finalTitleStr = [self.btnTimerConfig.titleEndStr stringByAppendingString:@"\n"];
     }
     NSLog(@"self.btnTimerConfig.titleEndStr = %@",self.btnTimerConfig.titleEndStr);
     NSLog(@"self.btnTimerConfig.finalTitleStr = %@",self.btnTimerConfig.finalTitleStr);
-    [self setTitleOrAttributedTitle];
-    self.backgroundColor = self.btnTimerConfig.bgEndColor;
+    [self setTitleEnd];
+    [self setTitleLabelConfigEnd];
+    [self setLayerConfigEnd];
+    self.backgroundColor = self.btnTimerConfig.bgEndCor;
     [self.btnTimerConfig.timerManager nsTimeDestroy];
 }
+#pragma mark —— Block
 //点击事件回调，就不要用系统的addTarget/action/forControlEvents
 -(void)actionCountDownClickEventBlock:(MKDataBlock _Nullable)countDownClickEventBlock{
     self.countDownClickEventBlock = countDownClickEventBlock;
@@ -288,11 +307,11 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
     self.countDownBlock = countDownBlock;
 }
 // 定时器运行时的Block
--(void)actionBlockTimerRunning:(MKDataBlock)timerRunningBlock{
+-(void)actionBlockTimerRunning:(MKDataBlock _Nullable)timerRunningBlock{
     self.timerRunningBlock = timerRunningBlock;
 }
 // 定时器结束时候的Block
--(void)actionBlockTimerFinish:(MKDataBlock)timerFinishBlock{
+-(void)actionBlockTimerFinish:(MKDataBlock _Nullable)timerFinishBlock{
     self.timerFinishBlock = timerFinishBlock;
 }
 #pragma mark SET | GET
@@ -302,21 +321,31 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
     if (!BtnTimerConfig) {
         BtnTimerConfig = ButtonTimerConfigModel.new;
         // 这里添加默认配置
+//        BtnTimerConfig.
         objc_setAssociatedObject(self,
                                  UIButton_Timer_btnTimerConfig,
                                  BtnTimerConfig,
                                  OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     // 定时器运行时的Block
+    @weakify(self)
     [BtnTimerConfig actionBlockTimerRunning:^(id data) {
+        @strongify(self)
         NSLog(@"data = %@",data);
+        if ([data isKindOfClass:NSTimerManager.class]) {
+            NSTimerManager *timeManager = (NSTimerManager *)data;
+            timeManager.timerStyle = BtnTimerConfig.countDownBtnType;
+            [self timerRuning:(long)timeManager.anticlockwiseTime];
+        }
+        
         if (self.timerRunningBlock) {
             self.timerRunningBlock(data);
         }
     }];
     // 定时器结束时候的Block
     [BtnTimerConfig actionBlockTimerFinish:^(id data) {
-        NSLog(@"死了 = %@",data);
+        NSLog(@"定时器结束 = %@",data);
+        @strongify(self)
         if (self.timerFinishBlock) {
             self.timerFinishBlock(data);
         }

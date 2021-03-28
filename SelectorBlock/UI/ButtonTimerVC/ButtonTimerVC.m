@@ -22,7 +22,6 @@
     self.view.backgroundColor = UIColor.whiteColor;
     self.btn.alpha = 1;
 }
-
 /*
  定时器相关方法在btn和其配置文件中均对外表达抛出
  */
@@ -58,21 +57,21 @@
 -(ButtonTimerConfigModel *)btnConfigModel{
     if (!_btnConfigModel) {
         _btnConfigModel = ButtonTimerConfigModel.new;
-        _btnConfigModel.titleBeginStr = @"开始";//✅
-        _btnConfigModel.titleColor = UIColor.orangeColor;//✅
-        _btnConfigModel.layerBorderColor = UIColor.greenColor;//✅
-        _btnConfigModel.titleLabelFont = [UIFont systemFontOfSize:10 weight:UIFontWeightRegular];//✅
-        _btnConfigModel.layerCornerRadius = 6;//✅
-        _btnConfigModel.layerBorderWidth = 1.f;//✅
-        _btnConfigModel.titleRuningStr = @"倒计时中";
+        _btnConfigModel.titleReadyPlayStr = @"开始";//✅
+        _btnConfigModel.titleReadyPlayCor = UIColor.orangeColor;//✅
+        _btnConfigModel.layerBorderReadyPlayCor = UIColor.greenColor;//✅
+        _btnConfigModel.titleLabelReadyPlayFont = [UIFont systemFontOfSize:10 weight:UIFontWeightRegular];//✅
+        _btnConfigModel.layerCornerReadyPlayRadius = 6;//✅
+        _btnConfigModel.layerBorderReadyPlayWidth = 1.f;//✅
+        _btnConfigModel.titleRunningStr = @"倒计时中";//✅
         _btnConfigModel.titleEndStr = @"倒计时完";
-        _btnConfigModel.bgCountDownColor = UIColor.lightGrayColor;
-        _btnConfigModel.bgEndColor = UIColor.blueColor;
+        _btnConfigModel.bgRunningCor = UIColor.lightGrayColor;//✅
+        _btnConfigModel.bgEndCor = UIColor.blueColor;
         _btnConfigModel.count = 10;//✅
-        _btnConfigModel.showTimeType = ShowTimeType_HHMMSS;
-        _btnConfigModel.countDownBtnType = CountDownBtnType_countDown;
-        _btnConfigModel.countDownBtnNewLineType = CountDownBtnNewLineType_normal;
-        _btnConfigModel.cequenceForShowTitleRuningStrType = CequenceForShowTitleRuningStrType_tail;
+        _btnConfigModel.showTimeType = ShowTimeType_SS;//✅
+        _btnConfigModel.countDownBtnType = TimerStyle_anticlockwise;
+        _btnConfigModel.countDownBtnNewLineType = CountDownBtnNewLineType_normal;//✅
+        _btnConfigModel.cequenceForShowTitleRuningStrType = CequenceForShowTitleRuningStrType_front;//✅
         _btnConfigModel.isCanBeClickWhenTimerCycle = YES;
 //        _btnConfigModel.attributedString;
 //        _btnConfigModel.richTextRunningDataMutArr;
@@ -88,6 +87,5 @@
         
     }return _btnConfigModel;
 }
-
 
 @end

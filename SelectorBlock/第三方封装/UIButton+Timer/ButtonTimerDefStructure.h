@@ -13,15 +13,10 @@ typedef enum : NSUInteger {
     ShowTimeType_MMSS,//分秒
     ShowTimeType_HHMMSS,//时分秒
 } ShowTimeType;
-/// 时间方向
-typedef enum : NSUInteger {
-    CountDownBtnType_normal = 0,//普通模式
-    CountDownBtnType_countDown//倒计时模式
-} CountDownBtnType;
 /// 是否换行
 typedef enum : NSUInteger {
-    CountDownBtnNewLineType_normal = 0,//普通模式
-    CountDownBtnNewLineType_newLine//换行模式
+    CountDownBtnNewLineType_newLine = 0,//换行模式
+    CountDownBtnNewLineType_normal//普通模式
 } CountDownBtnNewLineType;
 /// 文本显示类型
 typedef enum : NSUInteger {

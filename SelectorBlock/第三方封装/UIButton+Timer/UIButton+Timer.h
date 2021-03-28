@@ -6,8 +6,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AABlock.h"
+#import "NSObject+Time.h"
+#import "NSObject+RichText.h"//富文本
+#import "TimerManager.h"//时间管理
+#import "ButtonTimerDefStructure.h"
 #import "ButtonTimerConfigModel.h"
-#import "NSString+TimeFormatConvertFunc.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,9 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)ButtonTimerConfigModel *btnTimerConfig;
 
 // 定时器运行时的Block
--(void)actionBlockTimerRunning:(MKDataBlock)timerRunningBlock;
+-(void)actionBlockTimerRunning:(MKDataBlock _Nullable)timerRunningBlock;
 // 定时器结束时候的Block
--(void)actionBlockTimerFinish:(MKDataBlock)timerFinishBlock;
+-(void)actionBlockTimerFinish:(MKDataBlock _Nullable)timerFinishBlock;
 // 倒计时需要触发调用的方法：倒计时的时候外面同时干的事，随着定时器走，可以不实现
 -(void)actionCountDownBlock:(MKDataBlock _Nullable)countDownBlock;
 // 点击事件回调，就不要用系统的addTarget/action/forControlEvents
