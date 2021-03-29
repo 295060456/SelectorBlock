@@ -14,4 +14,7 @@ target 'SelectorBlock' do
   pod 'SDWebImage' # https://github.com/SDWebImage/SDWebImage YES_SMP
   pod 'YYImage'
   pod 'MJRefresh' # https://github.com/CoderMJLee/MJRefresh NO_SMP
+  
+  pod 'ALProgress'
+  
 end

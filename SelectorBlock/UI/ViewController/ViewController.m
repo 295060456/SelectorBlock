@@ -197,7 +197,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
         
         [self.view addSubview:_tableView];
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.view).offset(NavigationBarAndStatusBarHeight());
+            make.top.equalTo(self.view).offset(NavigationBarAndStatusBarHeight(nil));
             make.left.right.equalTo(self.view);
             make.height.mas_equalTo([MKRankTBVCell cellHeightWithModel:nil]);
         }];
