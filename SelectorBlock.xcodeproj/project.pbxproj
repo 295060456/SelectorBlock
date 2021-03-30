@@ -33,6 +33,7 @@
 		C5B7BCFD2609AC0D00BFF168 /* NSObject+RichText.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B7BCFC2609AC0D00BFF168 /* NSObject+RichText.m */; };
 		C5B7BD112609B2E300BFF168 /* TimeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B7BD0F2609B2E300BFF168 /* TimeModel.m */; };
 		C5B7BD162609B30100BFF168 /* NSObject+Time.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B7BD152609B30100BFF168 /* NSObject+Time.m */; };
+		C5C714CE26131E2800EA8207 /* DebugLogDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C714CD26131E2800EA8207 /* DebugLogDescription.m */; };
 		C5D8D254260CC44000BDAF76 /* toastLoading.gif in Resources */ = {isa = PBXBuildFile; fileRef = C5D8D253260CC44000BDAF76 /* toastLoading.gif */; };
 		C5D8D860260CC89300BDAF76 /* NSObject+DefConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D8D85E260CC89300BDAF76 /* NSObject+DefConfig.m */; };
 /* End PBXBuildFile section */
@@ -94,6 +95,8 @@
 		C5B7BD102609B2E300BFF168 /* TimeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeModel.h; sourceTree = "<group>"; };
 		C5B7BD142609B30100BFF168 /* NSObject+Time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Time.h"; sourceTree = "<group>"; };
 		C5B7BD152609B30100BFF168 /* NSObject+Time.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Time.m"; sourceTree = "<group>"; };
+		C5C714CC26131E2800EA8207 /* DebugLogDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugLogDescription.h; sourceTree = "<group>"; };
+		C5C714CD26131E2800EA8207 /* DebugLogDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugLogDescription.m; sourceTree = "<group>"; };
 		C5D8D253260CC44000BDAF76 /* toastLoading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = toastLoading.gif; sourceTree = "<group>"; };
 		C5D8D85E260CC89300BDAF76 /* NSObject+DefConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DefConfig.m"; sourceTree = "<group>"; };
 		C5D8D85F260CC89300BDAF76 /* NSObject+DefConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DefConfig.h"; sourceTree = "<group>"; };
@@ -248,6 +251,7 @@
 		C564E59625DE59F90068C203 /* 第三方封装 */ = {
 			isa = PBXGroup;
 			children = (
+				C5C714CB26131E2800EA8207 /* DebugLogDescription */,
 				C5B7BCFF2609AC1600BFF168 /* NSObject */,
 				C5B7BCE62609AC0000BFF168 /* TimerManager */,
 				C5B7BCD92609AAFF00BFF168 /* UIButton+Timer */,
@@ -360,12 +364,12 @@
 		C5B7BCFF2609AC1600BFF168 /* NSObject */ = {
 			isa = PBXGroup;
 			children = (
-				C5D8D85D260CC89300BDAF76 /* NSObject+DefConfig */,
-				C5B7BD132609B30100BFF168 /* NSObject+Time */,
 				C5B7BD0E2609B2E300BFF168 /* NSObject (Time) */,
-				C5B7BCFA2609AC0D00BFF168 /* NSObject+RichText */,
+				C5D8D85D260CC89300BDAF76 /* NSObject+DefConfig */,
 				C554322825F3619C002D1CA6 /* NSObject+Extras */,
 				C5542FCA25F3503D002D1CA6 /* NSObject+Other */,
+				C5B7BCFA2609AC0D00BFF168 /* NSObject+RichText */,
+				C5B7BD132609B30100BFF168 /* NSObject+Time */,
 			);
 			path = NSObject;
 			sourceTree = "<group>";
@@ -386,6 +390,15 @@
 				C5B7BD152609B30100BFF168 /* NSObject+Time.m */,
 			);
 			path = "NSObject+Time";
+			sourceTree = "<group>";
+		};
+		C5C714CB26131E2800EA8207 /* DebugLogDescription */ = {
+			isa = PBXGroup;
+			children = (
+				C5C714CC26131E2800EA8207 /* DebugLogDescription.h */,
+				C5C714CD26131E2800EA8207 /* DebugLogDescription.m */,
+			);
+			path = DebugLogDescription;
 			sourceTree = "<group>";
 		};
 		C5D8D85D260CC89300BDAF76 /* NSObject+DefConfig */ = {
@@ -557,6 +570,7 @@
 				C5542FC725F35032002D1CA6 /* UIViewController+BaseVC.m in Sources */,
 				C5B7BCE12609AB3900BFF168 /* ButtonTimerConfigModel.m in Sources */,
 				C564E59C25DE59F90068C203 /* ViewController.m in Sources */,
+				C5C714CE26131E2800EA8207 /* DebugLogDescription.m in Sources */,
 				C564E59B25DE59F90068C203 /* BaseTableViewCell.m in Sources */,
 				C5D8D860260CC89300BDAF76 /* NSObject+DefConfig.m in Sources */,
 				C564E5A325DE59F90068C203 /* AppDelegate.m in Sources */,
