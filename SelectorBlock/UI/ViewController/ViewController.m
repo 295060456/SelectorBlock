@@ -32,14 +32,14 @@ UITableViewDelegate
 //-(void)touchesBegan:(NSSet<UITouch *> *)touches
 //          withEvent:(UIEvent *)event{
 //    NSLog(@"%@",self.navigationController);
-//    [self comingToVC:CheckMemFreeVC.new];
+//    [self comingToPushVC:CheckMemFreeVC.new];
 //}
 
 // NSInvocation的使用，方法多参数传递
 -(void)touchesBegan:(NSSet<UITouch *> *)touches
           withEvent:(UIEvent *)event{
     
-    [self comingToVC:ButtonTimerVC.new];
+    [self comingToPushVC:ButtonTimerVC.new];
     
     NSString *arg1 = @"a";
     NSString *arg2 = @"b";
