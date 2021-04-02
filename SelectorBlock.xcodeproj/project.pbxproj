@@ -52,6 +52,7 @@
 		C554322325F36173002D1CA6 /* NSString+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extras.m"; sourceTree = "<group>"; };
 		C554322925F3619C002D1CA6 /* NSObject+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Extras.h"; sourceTree = "<group>"; };
 		C554322A25F3619C002D1CA6 /* NSObject+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Extras.m"; sourceTree = "<group>"; };
+		C562466D2616E4A600F3BC97 /* LoadingImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoadingImage.h; sourceTree = "<group>"; };
 		C563211526084B6900822149 /* BaseViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewControllerProtocol.h; sourceTree = "<group>"; };
 		C563211626084B6900822149 /* BaseCellProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseCellProtocol.h; sourceTree = "<group>"; };
 		C563211726084B6900822149 /* BaseViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewProtocol.h; sourceTree = "<group>"; };
@@ -207,6 +208,14 @@
 			path = "NSObject+Extras";
 			sourceTree = "<group>";
 		};
+		C562466E2616E4AD00F3BC97 /* UIImage */ = {
+			isa = PBXGroup;
+			children = (
+				C562466D2616E4A600F3BC97 /* LoadingImage.h */,
+			);
+			path = UIImage;
+			sourceTree = "<group>";
+		};
 		C563211426084B6900822149 /* BaseProtocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,6 +260,7 @@
 		C564E59625DE59F90068C203 /* 第三方封装 */ = {
 			isa = PBXGroup;
 			children = (
+				C562466E2616E4AD00F3BC97 /* UIImage */,
 				C5C714CB26131E2800EA8207 /* DebugLogDescription */,
 				C5B7BCFF2609AC1600BFF168 /* NSObject */,
 				C5B7BCE62609AC0000BFF168 /* TimerManager */,

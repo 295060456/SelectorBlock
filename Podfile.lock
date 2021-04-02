@@ -6,6 +6,7 @@ PODS:
   - GKPhotoBrowser/SD (2.1.8):
     - GKPhotoBrowser/Core
     - SDWebImage (~> 5.0)
+  - LYEmptyView (1.3.1)
   - Masonry (1.1.0)
   - MJRefresh (3.5.0)
   - ReactiveObjC (3.1.1)
@@ -21,6 +22,7 @@ PODS:
 DEPENDENCIES:
   - ALProgress
   - GKPhotoBrowser
+  - LYEmptyView
   - Masonry
   - MJRefresh
   - ReactiveObjC
@@ -33,6 +35,7 @@ SPEC REPOS:
   trunk:
     - ALProgress
     - GKPhotoBrowser
+    - LYEmptyView
     - Masonry
     - MJRefresh
     - ReactiveObjC
@@ -44,6 +47,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   ALProgress: 793be069feead2ca7efcb261003dce794fb5970e
   GKPhotoBrowser: 61672c81464a8abb40e81eb802939bca7478a962
+  LYEmptyView: b6d418cfa38b78df0cf243f9a9c25ccbdc399922
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MJRefresh: 6afc955813966afb08305477dd7a0d9ad5e79a16
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
@@ -52,6 +56,6 @@ SPEC CHECKSUMS:
   WHToast: 11a17a3f09f5f733e32bd6f3338919a448cbb719
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
 
-PODFILE CHECKSUM: ffd4923f4d80923a2278954eaa3e070deba32aa9
+PODFILE CHECKSUM: c8b9fbedae8161aebb692cb5fd1c6585ab35d6b4
 
 COCOAPODS: 1.10.1

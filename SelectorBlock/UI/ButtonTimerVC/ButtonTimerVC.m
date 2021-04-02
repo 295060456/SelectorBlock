@@ -6,7 +6,9 @@
 //
 
 #import "ButtonTimerVC.h"
+
 #import "UIButton+Timer.h"
+#import "LoadingImage.h"
 
 @interface ButtonTimerVC ()
 
@@ -38,10 +40,6 @@
             @strongify(self)
             [self->_btn startTimer];// 可独立。不是说一点击就一定要开始计时，中间可能有业务判断逻辑
         }];
-        // 倒计时需要触发调用的方法：倒计时的时候外面同时干的事，随着定时器走，可以不实现
-        [_btn actionCountDownBlock:^(id data) {
-            NSLog(@"倒计时需要触发调用的方法");
-        }];
         // 定时器运行时的Block
         [_btn actionBlockTimerRunning:^(id data) {
             NSLog(@"定时器运行时的Block");
@@ -57,34 +55,29 @@
 -(ButtonTimerConfigModel *)btnConfigModel{
     if (!_btnConfigModel) {
         _btnConfigModel = ButtonTimerConfigModel.new;
-        _btnConfigModel.titleReadyPlayStr = @"开始";//✅
-        _btnConfigModel.titleReadyPlayCor = UIColor.orangeColor;//✅
-        _btnConfigModel.layerBorderReadyPlayCor = UIColor.greenColor;//✅
-        _btnConfigModel.titleLabelReadyPlayFont = [UIFont systemFontOfSize:10 weight:UIFontWeightRegular];//✅
-        _btnConfigModel.layerCornerReadyPlayRadius = 6;//✅
-        _btnConfigModel.layerBorderReadyPlayWidth = 1.f;//✅
-        _btnConfigModel.titleRunningStr = @"倒计时中";//✅
-        _btnConfigModel.titleEndStr = @"倒计时完";
-        _btnConfigModel.bgRunningCor = UIColor.lightGrayColor;//✅
-        _btnConfigModel.bgEndCor = UIColor.blueColor;
-        _btnConfigModel.count = 10;//✅
-        _btnConfigModel.showTimeType = ShowTimeType_SS;//✅
-        _btnConfigModel.countDownBtnType = TimerStyle_anticlockwise;
-        _btnConfigModel.countDownBtnNewLineType = CountDownBtnNewLineType_normal;//✅
-        _btnConfigModel.cequenceForShowTitleRuningStrType = CequenceForShowTitleRuningStrType_front;//✅
-        _btnConfigModel.isCanBeClickWhenTimerCycle = YES;
-//        _btnConfigModel.attributedString;
-//        _btnConfigModel.richTextRunningDataMutArr;
-        
-        // 定时器运行时的Block
-        [_btnConfigModel actionBlockTimerRunning:^(id data) {
-//            NSLog(@"data = %@",data);
-        }];
-        // 定时器结束时候的Block
-        [_btnConfigModel actionBlockTimerFinish:^(id data) {
-//            NSLog(@"死了 = %@",data);
-        }];
-        
+#pragma mark —— 计时器未开始
+        _btnConfigModel.titleReadyPlayStr = @"  获取验证码   ";//✅
+        _btnConfigModel.layerBorderReadyPlayCor = UIColor.whiteColor;
+        _btnConfigModel.titleReadyPlayCor = UIColor.whiteColor;;
+        _btnConfigModel.titleLabelReadyPlayFont = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
+        _btnConfigModel.bgReadyPlayCor = [UIColor colorWithPatternImage:KIMG(@"gradualColor")];
+        _btnConfigModel.layerCornerReadyPlayRadius = 15;
+        _btnConfigModel.layerBorderReadyPlayWidth = .5f;
+//#pragma mark —— 计时器进行中
+//        _btnConfigModel.layerBorderRunningCor = KLightGrayColor;
+//        _btnConfigModel.titleRunningCor = kWhiteColor;
+//        _btnConfigModel.titleLabelRunningFont = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
+//        _btnConfigModel.bgRunningCor = KLightGrayColor;
+//        _btnConfigModel.layerBorderRunningWidth = 15;
+//        _btnConfigModel.layerCornerRunningRadius = .5f;
+//#pragma mark —— 计时器结束
+//        _btnConfigModel.layerBorderEndCor = kWhiteColor;
+//        _btnConfigModel.bgEndCor = kWhiteColor;
+//        _btnConfigModel.titleEndCor = kWhiteColor;
+//        _btnConfigModel.titleLabelEndFont = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
+//        _btnConfigModel.layerCornerEndRadius = 15;
+//        _btnConfigModel.layerBorderEndWidth = .5f;
+
     }return _btnConfigModel;
 }
 

@@ -15,8 +15,8 @@ typedef enum : NSUInteger {
 } ShowTimeType;
 /// 是否换行
 typedef enum : NSUInteger {
-    CountDownBtnNewLineType_newLine = 0,//换行模式
-    CountDownBtnNewLineType_normal//普通模式
+    CountDownBtnNewLineType_normal = 0,//普通模式
+    CountDownBtnNewLineType_newLine//换行模式
 } CountDownBtnNewLineType;
 /// 文本显示类型
 typedef enum : NSUInteger {

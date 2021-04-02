@@ -14,6 +14,7 @@ target 'SelectorBlock' do
   pod 'SDWebImage' # https://github.com/SDWebImage/SDWebImage YES_SMP
   pod 'YYImage'
   pod 'MJRefresh' # https://github.com/CoderMJLee/MJRefresh NO_SMP
+  pod 'LYEmptyView' # https://github.com/dev-liyang/LYEmptyView iOS一行代码集成空白页面占位图(无数据、无网络占位图)
   
   pod 'ALProgress'
   

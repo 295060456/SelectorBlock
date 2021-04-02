@@ -10,15 +10,11 @@
 @implementation UIButton (Timer)
 
 static char *UIButton_Timer_btnTimerConfig = "UIButton_Timer_btnTimerConfig";
-static char *UIButton_CountDownBtn_isDataStrMakeNewLine = "UIButton_CountDownBtn_isDataStrMakeNewLine";
-static char *UIButton_CountDownBtn_countDownBlock = "UIButton_CountDownBtn_countDownBlock";
 static char *UIButton_CountDownBtn_countDownClickEventBlock = "UIButton_CountDownBtn_countDownClickEventBlock";
 static char *UIButton_CountDownBtn_timerRunningBlock = "UIButton_CountDownBtn_timerRunningBlock";
 static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_timerFinishBlock";
 
 @dynamic btnTimerConfig;
-@dynamic isDataStrMakeNewLine;
-@dynamic countDownBlock;
 @dynamic countDownClickEventBlock;
 @dynamic timerRunningBlock;
 @dynamic timerFinishBlock;
@@ -48,11 +44,11 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
     self.layer.borderColor = self.btnTimerConfig.layerBorderReadyPlayCor.CGColor;
     self.layer.cornerRadius = self.btnTimerConfig.layerCornerReadyPlayRadius;
     self.layer.borderWidth = self.btnTimerConfig.layerBorderReadyPlayWidth;
+    self.backgroundColor = self.btnTimerConfig.bgReadyPlayCor;
 }
 
 -(void)setTitleLabelConfigReadyPlay{
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.titleLabel.numberOfLines = self.btnTimerConfig.countDownBtnNewLineType;
     self.titleLabel.font = self.btnTimerConfig.titleLabelReadyPlayFont;
     [self setTitleColor:self.btnTimerConfig.titleReadyPlayCor
                forState:UIControlStateNormal];
@@ -68,7 +64,15 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
 
 -(void)setTitleLabelConfigRunning{
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.titleLabel.numberOfLines = self.btnTimerConfig.countDownBtnNewLineType;
+    self.titleLabel.numberOfLines = !self.btnTimerConfig.countDownBtnNewLineType;
+    // 换行模式仅仅作用于倒计时期间
+    if (self.btnTimerConfig.countDownBtnNewLineType == CountDownBtnNewLineType_newLine){
+//        self.titleLabel.numberOfLines = !self.btnTimerConfig.countDownBtnNewLineType;
+        self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        [self.titleLabel sizeToFit];
+//        self.titleLabel.adjustsFontSizeToFitWidth = YES;
+    }
+    
     self.titleLabel.font = self.btnTimerConfig.titleLabelRunningFont;
     [self setTitleColor:self.btnTimerConfig.titleRunningCor
                forState:UIControlStateNormal];
@@ -84,7 +88,6 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
 
 -(void)setTitleLabelConfigEnd{
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.titleLabel.numberOfLines = self.btnTimerConfig.countDownBtnNewLineType;
     self.titleLabel.font = self.btnTimerConfig.titleLabelEndFont;
     [self setTitleColor:self.btnTimerConfig.titleEndCor
                forState:UIControlStateNormal];
@@ -112,18 +115,17 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
         [self setAttributedTitle:self.btnTimerConfig.titleRunningAttributedStr
                         forState:UIControlStateNormal];
     }else{
-//        [self setTitle:self.btnTimerConfig.finalTitleStr
-//              forState:UIControlStateNormal];
         [self setTitle:self.btnTimerConfig.titleRunningStr
               forState:UIControlStateNormal];
     }
+    NSLog(@"WWWW = %@",self.btnTimerConfig.titleRunningStr);
 }
 /// 计时器结束
 -(void)setTitleEnd{
     if (self.btnTimerConfig.titleEndDataMutArr.count ||
         self.btnTimerConfig.titleEndAttributedStr) {
         //富文本
-        [self setAttributedTitle:self.btnTimerConfig.titleRunningAttributedStr
+        [self setAttributedTitle:self.btnTimerConfig.titleEndAttributedStr
                         forState:UIControlStateNormal];
     }else{
         [self setTitle:self.btnTimerConfig.titleEndStr
@@ -131,39 +133,35 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
     }
 }
 #pragma mark —— 时间方法
-//开启倒计时
+//开启计时【用初始化时间】
 -(void)startTimer{
-    [self timeFailBeginFrom:self.btnTimerConfig.count];
+    [self startTimer:self.btnTimerConfig.count];
 }
-//倒计时方法:
--(void)timeFailBeginFrom:(NSInteger)timeCount{
-    
-    if (self.btnTimerConfig.countDownBtnNewLineType == CountDownBtnNewLineType_newLine) {
-        self.btnTimerConfig.finalTitleStr = [self.btnTimerConfig.titleReadyPlayStr stringByAppendingString:@"\n"];
-        NSLog(@"self.finalTitleStr = %@",self.btnTimerConfig.finalTitleStr);
-    }
-
+//开启计时【从某个时间】
+-(void)startTimer:(NSInteger)timeCount{
     [self setTitleReadyPlay];
     [self setLayerConfigReadyPlay];
     [self setTitleLabelConfigReadyPlay];
-    self.btnTimerConfig.countDownBtnType = TimerStyle_anticlockwise;
     self.btnTimerConfig.count = timeCount;
-    self.enabled = NO;
-    
     //启动方式——1
 //    [NSTimerManager nsTimeStart:self.nsTimerManager
 //                    withRunLoop:nil];
     //启动方式——2
     [self.btnTimerConfig.timerManager nsTimeStartSysAutoInRunLoop];
 }
-
+// 核心方法
 -(void)timerRuning:(long)currentTime {
     //其他一些基础设置
     {
         self.enabled = self.btnTimerConfig.isCanBeClickWhenTimerCycle;//倒计时期间，默认不接受任何的点击事件
         self.backgroundColor = self.btnTimerConfig.bgRunningCor;
     }
-    
+
+    // 清除上一次拼装的数据
+    if ([self.btnTimerConfig.titleRunningStr containsString:self.btnTimerConfig.formatTimeStr] &&
+        self.btnTimerConfig.formatTimeStr) {
+        self.btnTimerConfig.titleRunningStr = [self.btnTimerConfig.titleRunningStr stringByReplacingOccurrencesOfString:self.btnTimerConfig.formatTimeStr withString:@""];
+    }
     //显示数据的二次封装
     {
         // 显示的时间格式
@@ -184,37 +182,26 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
         //字符串拼接
         switch (self.btnTimerConfig.cequenceForShowTitleRuningStrType) {
             case CequenceForShowTitleRuningStrType_front:{//首在前
-                if (self.btnTimerConfig.countDownBtnNewLineType == CountDownBtnNewLineType_newLine){//提行
-                    
-                    if (!self.isDataStrMakeNewLine) {
-                        self.btnTimerConfig.titleRunningStr = [self.btnTimerConfig.titleRunningStr stringByAppendingString:@"\n"];
-                        self.isDataStrMakeNewLine = YES;
-                    }
-                }
-                self.btnTimerConfig.finalTitleStr = [self.btnTimerConfig.titleRunningStr stringByAppendingString:self.btnTimerConfig.formatTimeStr];
+                self.btnTimerConfig.titleRunningStr = [self.btnTimerConfig.titleRunningStr stringByAppendingString:self.btnTimerConfig.formatTimeStr];
             }break;
             case CequenceForShowTitleRuningStrType_tail:{//首在后
-                if (self.btnTimerConfig.countDownBtnNewLineType == CountDownBtnNewLineType_newLine) {//提行
-                    self.btnTimerConfig.formatTimeStr = [self.btnTimerConfig.formatTimeStr stringByAppendingString:@"\n"];//每次都要刷新，所以不必用isDataStrMakeNewLine来进行约束是否加\n
-                }
-                self.btnTimerConfig.finalTitleStr = [self.btnTimerConfig.formatTimeStr stringByAppendingString:self.btnTimerConfig.titleRunningStr];
+                self.btnTimerConfig.titleRunningStr = [self.btnTimerConfig.formatTimeStr stringByAppendingString:self.btnTimerConfig.titleRunningStr];
             }break;
             default:
-                self.btnTimerConfig.finalTitleStr = @"异常值";
+                self.btnTimerConfig.titleRunningStr = @"异常值";
                 break;
         }
     }
-    NSLog(@"%@",self.btnTimerConfig.titleRunningStr);
-    NSLog(@"%@",self.btnTimerConfig.formatTimeStr);
-    NSLog(@"self.finalTitleStr = %@",self.btnTimerConfig.finalTitleStr);
-    if(self.btnTimerConfig.titleReadyPlayAttributedDataMutArr.count){
+    // 富文本：锚定 titleRunningStr 和 formatTimeStr
+    if(self.btnTimerConfig.titleRunningDataMutArr.count ||
+       self.btnTimerConfig.titleRunningAttributedStr){
         //富文本 每一次时间触发方法都刷新数据并赋值
         NSMutableArray *tempDataMutArr = NSMutableArray.array;
         RichLabelDataStringsModel *formatTimeModel = RichLabelDataStringsModel.new;
         RichLabelDataStringsModel *titleRuningModel = RichLabelDataStringsModel.new;
 
-        for (int i = 0; i < self.btnTimerConfig.titleReadyPlayAttributedDataMutArr.count; i ++) {
-            RichLabelDataStringsModel *richLabelDataStringsModel = self.btnTimerConfig.titleReadyPlayAttributedDataMutArr[i];
+        for (int i = 0; i < self.btnTimerConfig.titleRunningDataMutArr.count; i ++) {
+            RichLabelDataStringsModel *richLabelDataStringsModel = self.btnTimerConfig.titleRunningDataMutArr[i];
 
             if (i == 0) {
                 //修改range
@@ -277,34 +264,36 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
             default:
                 break;
         }
-        self.btnTimerConfig.titleReadyPlayAttributedStr = [NSObject makeRichTextWithDataConfigMutArr:tempDataMutArr];
+        self.btnTimerConfig.titleRunningAttributedStr = [NSObject makeRichTextWithDataConfigMutArr:tempDataMutArr];
     }
-    [self setTitleRunning];
+    
+    [self setTitleRunning];// 核心方法
     [self setLayerConfigRunning];
     [self setTitleLabelConfigRunning];
 }
 
 -(void)timerDestroy{
     self.enabled = YES;
-    if (self.btnTimerConfig.countDownBtnNewLineType == CountDownBtnNewLineType_newLine) {
-        self.btnTimerConfig.finalTitleStr = [self.btnTimerConfig.titleEndStr stringByAppendingString:@"\n"];
-    }
     NSLog(@"self.btnTimerConfig.titleEndStr = %@",self.btnTimerConfig.titleEndStr);
-    NSLog(@"self.btnTimerConfig.finalTitleStr = %@",self.btnTimerConfig.finalTitleStr);
     [self setTitleEnd];
     [self setTitleLabelConfigEnd];
     [self setLayerConfigEnd];
     self.backgroundColor = self.btnTimerConfig.bgEndCor;
     [self.btnTimerConfig.timerManager nsTimeDestroy];
 }
+// Size自适应【注意：外界不要把Size的宽高写死】
+-(void)fontDecideSize{
+    [self sizeToFit];
+}
+// 字体自适应
+-(void)sizeDecideFont{
+    [self.titleLabel sizeToFit];
+    self.titleLabel.adjustsFontSizeToFitWidth = YES;
+}
 #pragma mark —— Block
 //点击事件回调，就不要用系统的addTarget/action/forControlEvents
 -(void)actionCountDownClickEventBlock:(MKDataBlock _Nullable)countDownClickEventBlock{
     self.countDownClickEventBlock = countDownClickEventBlock;
-}
-//倒计时需要触发调用的方法：倒计时的时候外面同时干的事，随着定时器走，可以不实现
--(void)actionCountDownBlock:(MKDataBlock _Nullable)countDownBlock{
-    self.countDownBlock = countDownBlock;
 }
 // 定时器运行时的Block
 -(void)actionBlockTimerRunning:(MKDataBlock _Nullable)timerRunningBlock{
@@ -335,7 +324,9 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
         if ([data isKindOfClass:NSTimerManager.class]) {
             NSTimerManager *timeManager = (NSTimerManager *)data;
             timeManager.timerStyle = BtnTimerConfig.countDownBtnType;
-            [self timerRuning:(long)timeManager.anticlockwiseTime];
+            
+            NSLog(@"DDD = %f",timeManager.anticlockwiseTime);
+            [self timerRuning:(long)timeManager.anticlockwiseTime];//倒计时方法
         }
         
         if (self.timerRunningBlock) {
@@ -344,8 +335,9 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
     }];
     // 定时器结束时候的Block
     [BtnTimerConfig actionBlockTimerFinish:^(id data) {
-        NSLog(@"定时器结束 = %@",data);
         @strongify(self)
+        [self timerDestroy];
+        NSLog(@"定时器结束 = %@",data);
         if (self.timerFinishBlock) {
             self.timerFinishBlock(data);
         }
@@ -358,28 +350,6 @@ static char *UIButton_CountDownBtn_timerFinishBlock = "UIButton_CountDownBtn_tim
                              UIButton_Timer_btnTimerConfig,
                              btnTimerConfig,
                              OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-#pragma mark —— @property(nonatomic,assign)BOOL isDataStrMakeNewLine;//给原始数据只添加一次 \n
--(BOOL)isDataStrMakeNewLine{
-    return [objc_getAssociatedObject(self, UIButton_CountDownBtn_isDataStrMakeNewLine) boolValue];;
-}
-
--(void)setIsDataStrMakeNewLine:(BOOL)isDataStrMakeNewLine{
-    objc_setAssociatedObject(self,
-                             UIButton_CountDownBtn_isDataStrMakeNewLine,
-                             [NSNumber numberWithBool:isDataStrMakeNewLine],
-                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-#pragma mark —— @property(nonatomic,copy)MKDataBlock countDownBlock;
--(MKDataBlock)countDownBlock{
-    return objc_getAssociatedObject(self, UIButton_CountDownBtn_countDownBlock);
-}
-
--(void)setCountDownBlock:(MKDataBlock)countDownBlock{
-    objc_setAssociatedObject(self,
-                             UIButton_CountDownBtn_countDownBlock,
-                             countDownBlock,
-                             OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 #pragma mark —— @property(nonatomic,copy)MKDataBlock countDownClickEventBlock;
 -(MKDataBlock)countDownClickEventBlock{
