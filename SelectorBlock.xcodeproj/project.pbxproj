@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		48F223AE6C80B2DD03D52586 /* Pods_SelectorBlock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E26441F73BD6CD18EC58E7E2 /* Pods_SelectorBlock.framework */; };
+		C54E7FFC26182F9F003CCC8C /* UILabel+Gesture.m in Sources */ = {isa = PBXBuildFile; fileRef = C54E7FFB26182F9F003CCC8C /* UILabel+Gesture.m */; };
 		C5542FBD25F34F76002D1CA6 /* CheckMemFreeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C5542FBC25F34F76002D1CA6 /* CheckMemFreeVC.m */; };
 		C5542FC325F34FE1002D1CA6 /* WHToast+DDToast.m in Sources */ = {isa = PBXBuildFile; fileRef = C5542FC125F34FE1002D1CA6 /* WHToast+DDToast.m */; };
 		C5542FC725F35032002D1CA6 /* UIViewController+BaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C5542FC625F35032002D1CA6 /* UIViewController+BaseVC.m */; };
@@ -41,6 +42,8 @@
 /* Begin PBXFileReference section */
 		33C33E34924E5F7908E0C62C /* Pods-SelectorBlock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SelectorBlock.release.xcconfig"; path = "Target Support Files/Pods-SelectorBlock/Pods-SelectorBlock.release.xcconfig"; sourceTree = "<group>"; };
 		4F99AB5ADC327EEB61EFDE34 /* Pods-SelectorBlock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SelectorBlock.debug.xcconfig"; path = "Target Support Files/Pods-SelectorBlock/Pods-SelectorBlock.debug.xcconfig"; sourceTree = "<group>"; };
+		C54E7FFA26182F9F003CCC8C /* UILabel+Gesture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UILabel+Gesture.h"; sourceTree = "<group>"; };
+		C54E7FFB26182F9F003CCC8C /* UILabel+Gesture.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Gesture.m"; sourceTree = "<group>"; };
 		C5542FBB25F34F76002D1CA6 /* CheckMemFreeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckMemFreeVC.h; sourceTree = "<group>"; };
 		C5542FBC25F34F76002D1CA6 /* CheckMemFreeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckMemFreeVC.m; sourceTree = "<group>"; };
 		C5542FC125F34FE1002D1CA6 /* WHToast+DDToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WHToast+DDToast.m"; sourceTree = "<group>"; };
@@ -269,6 +272,8 @@
 				C554322625F36177002D1CA6 /* NSString+Extras */,
 				C5542FCB25F35043002D1CA6 /* UIView+Gesture */,
 				C5542FC925F35037002D1CA6 /* UIViewController+BaseVC */,
+				C54E7FFA26182F9F003CCC8C /* UILabel+Gesture.h */,
+				C54E7FFB26182F9F003CCC8C /* UILabel+Gesture.m */,
 			);
 			path = "第三方封装";
 			sourceTree = "<group>";
@@ -595,6 +600,7 @@
 				C5B7BCDC2609AB1500BFF168 /* UIButton+Timer.m in Sources */,
 				C5B7BCF72609AC0000BFF168 /* Nanosecond_TimerManager.m in Sources */,
 				C564E59D25DE59F90068C203 /* MKRankTBVCell.m in Sources */,
+				C54E7FFC26182F9F003CCC8C /* UILabel+Gesture.m in Sources */,
 				C564E5A525DE59F90068C203 /* UIView+Gesture.m in Sources */,
 				C564E5A425DE59F90068C203 /* NSObject+Other.m in Sources */,
 				C5B7BCF82609AC0000BFF168 /* CADisplayLink_TimerManager.m in Sources */,

@@ -10,6 +10,8 @@
 #import "UIButton+Timer.h"
 #import "LoadingImage.h"
 
+#import "UILabel+Gesture.h"
+
 @interface ButtonTimerVC ()
 
 @property(nonatomic,strong)ButtonTimerConfigModel *btnConfigModel;
@@ -23,6 +25,54 @@
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
     self.btn.alpha = 1;
+    
+    {
+        UILabel *lab = UILabel.new;
+        lab.frame = CGRectMake(100, 200, 200, 50);
+        lab.backgroundColor = UIColor.orangeColor;
+        [self.view addSubview:lab];
+        lab.attributedText = self.makeContentLabAttributedText;
+        NSLog(@"");
+    }
+}
+
+-(NSAttributedString *)makeContentLabAttributedText{
+    
+    NSMutableArray *tempDataMutArr = NSMutableArray.array;
+    
+    {
+        RichLabelDataStringsModel *title_1_Model = RichLabelDataStringsModel.new;
+        title_1_Model.subString = @"我";
+        title_1_Model.cor = UIColor.redColor;
+        title_1_Model.font = [UIFont systemFontOfSize:10 weight:UIFontWeightRegular];
+        [tempDataMutArr addObject:title_1_Model];
+    }
+    
+    {
+        RichLabelDataStringsModel *title_2_Model = RichLabelDataStringsModel.new;
+        title_2_Model.subString = @"爱";
+        title_2_Model.cor = UIColor.blueColor;
+        title_2_Model.font = [UIFont systemFontOfSize:15 weight:UIFontWeightThin];
+        [tempDataMutArr addObject:title_2_Model];
+    }
+    
+    {
+        RichLabelDataStringsModel *title_3_Model = RichLabelDataStringsModel.new;
+        title_3_Model.subString = @"北京";
+        title_3_Model.cor = UIColor.brownColor;
+        title_3_Model.font = [UIFont systemFontOfSize:17 weight:UIFontWeightBlack];
+        [tempDataMutArr addObject:title_3_Model];
+    }
+    
+    {
+        RichLabelDataStringsModel *title_4_Model = RichLabelDataStringsModel.new;
+        title_4_Model.subString = @"天安门";
+        title_4_Model.cor = UIColor.greenColor;
+        title_4_Model.font = [UIFont systemFontOfSize:19 weight:UIFontWeightMedium];
+        [tempDataMutArr addObject:title_4_Model];
+    }
+
+    return [NSObject makeRichTextWithDataConfigMutArr:tempDataMutArr];
 }
 /*
  定时器相关方法在btn和其配置文件中均对外表达抛出
