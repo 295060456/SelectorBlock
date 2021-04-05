@@ -16,6 +16,7 @@
 
 @property(nonatomic,strong)ButtonTimerConfigModel *btnConfigModel;
 @property(nonatomic,strong)UIButton *btn;
+@property(nonatomic,strong)UIImageView *mainIMGV;
 
 @end
 
@@ -26,14 +27,52 @@
     self.view.backgroundColor = UIColor.whiteColor;
     self.btn.alpha = 1;
     
+    [self primitAttributeStr];
+    
     {
         UILabel *lab = UILabel.new;
         lab.frame = CGRectMake(100, 200, 200, 50);
-        lab.backgroundColor = UIColor.orangeColor;
+//        lab.backgroundColor = UIColor.orangeColor;
         [self.view addSubview:lab];
         lab.attributedText = self.makeContentLabAttributedText;
-        NSLog(@"");
+        NSLog(@"%@",lab.attributedText);
     }
+    
+    self.mainIMGV.alpha = 1;
+}
+
+
+-(void)primitAttributeStr {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, self.view.bounds.size.width, 100)];
+    NSMutableAttributedString *attaStr = [[NSMutableAttributedString alloc] initWithString:@"富文本"];
+    //下滑线
+    NSMutableAttributedString *underlineStr = [[NSMutableAttributedString alloc] initWithString:@"下滑线"];
+    [underlineStr addAttributes:@{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),
+                                  NSUnderlineColorAttributeName: [UIColor redColor]
+                                  } range:NSMakeRange(0, 3)];
+    [attaStr appendAttributedString:underlineStr];
+    //删除线
+    NSMutableAttributedString *throughlineStr = [[NSMutableAttributedString alloc] initWithString:@"删除线"];
+    [throughlineStr addAttributes:@{NSStrikethroughStyleAttributeName: @(NSUnderlineStyleSingle),
+                                    NSStrikethroughColorAttributeName: [UIColor orangeColor]
+                                    } range:NSMakeRange(0, 3)];
+    [attaStr appendAttributedString:throughlineStr];
+    //超链接
+    NSString *urlStr = @"http://www.baidu.com";
+    NSMutableAttributedString *linkStr = [[NSMutableAttributedString alloc] initWithString:urlStr];
+    [linkStr addAttributes:@{NSLinkAttributeName: [NSURL URLWithString:urlStr]} range:NSMakeRange(0, urlStr.length)];
+    [attaStr appendAttributedString:linkStr];
+    //图片
+//    NSTextAttachment *imgAttach =  [[NSTextAttachment alloc] init];
+//    imgAttach.image = [UIImage imageNamed:@"dribbble64_imageio"];
+//    imgAttach.bounds = CGRectMake(0, 0, 30, 30);
+//    NSAttributedString *attachStr = [NSAttributedString attributedStringWithAttachment:imgAttach];
+//    [attaStr appendAttributedString:attachStr];
+    
+    label.attributedText = attaStr;
+    NSLog(@"%@",attaStr);
+    label.numberOfLines = 0;
+    [self.view addSubview:label];
 }
 
 -(NSAttributedString *)makeContentLabAttributedText{
@@ -47,7 +86,7 @@
         title_1_Model.font = [UIFont systemFontOfSize:10 weight:UIFontWeightRegular];
         [tempDataMutArr addObject:title_1_Model];
     }
-    
+
     {
         RichLabelDataStringsModel *title_2_Model = RichLabelDataStringsModel.new;
         title_2_Model.subString = @"爱";
@@ -55,7 +94,7 @@
         title_2_Model.font = [UIFont systemFontOfSize:15 weight:UIFontWeightThin];
         [tempDataMutArr addObject:title_2_Model];
     }
-    
+
     {
         RichLabelDataStringsModel *title_3_Model = RichLabelDataStringsModel.new;
         title_3_Model.subString = @"北京";
@@ -66,7 +105,8 @@
     
     {
         RichLabelDataStringsModel *title_4_Model = RichLabelDataStringsModel.new;
-        title_4_Model.subString = @"天安门";
+        title_4_Model.subString = @"wgoole.cn";
+        title_4_Model.urlStr = @"werejofn";
         title_4_Model.cor = UIColor.greenColor;
         title_4_Model.font = [UIFont systemFontOfSize:19 weight:UIFontWeightMedium];
         [tempDataMutArr addObject:title_4_Model];
@@ -129,6 +169,43 @@
 //        _btnConfigModel.layerBorderEndWidth = .5f;
 
     }return _btnConfigModel;
+}
+
+-(UIImageView *)mainIMGV{
+    if (!_mainIMGV) {
+        _mainIMGV = UIImageView.new;
+        _mainIMGV.userInteractionEnabled = YES;
+        
+        {// B
+            _mainIMGV.userInteractionEnabled = YES;
+            _mainIMGV.target = self;
+            _mainIMGV.numberOfTouchesRequired = 1;
+            _mainIMGV.minimumPressDuration = 1;
+            _mainIMGV.longPressGR.enabled = YES;
+        }
+        
+        {// A
+            
+//            _mainIMGV.userInteractionEnabled = YES;
+//            _mainIMGV.target = self;
+//            _mainIMGV.numberOfTouchesRequired = 1;
+//            _mainIMGV.numberOfTapsRequired = 1;
+//            _mainIMGV.tapGR.enabled = YES;
+//            @weakify(self)
+            _mainIMGV.callbackBlock = ^(id weakSelf,
+                                        id arg,
+                                        UIGestureRecognizer *data3) {
+//                @strongify(self)
+                NSLog(@"295006");
+            };
+        }
+        _mainIMGV.backgroundColor = UIColor.redColor;
+        [self.view addSubview:_mainIMGV];
+        [_mainIMGV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(80, 80));
+            make.center.equalTo(self.view);
+        }];
+    }return _mainIMGV;
 }
 
 @end

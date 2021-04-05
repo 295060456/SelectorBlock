@@ -76,7 +76,7 @@ static char *UIView_Gesture_screenEdgePanGR = "UIView_Gesture_screenEdgePanGR";
             if (self.callbackBlock) {
                 self.callbackBlock(weakSelf,
                                    arg,
-                                   LongPressGR);
+                                   self.longPressGR);
             }
         }, self.target)];
     }
@@ -89,7 +89,7 @@ static char *UIView_Gesture_screenEdgePanGR = "UIView_Gesture_screenEdgePanGR";
             if (self.callbackBlock) {
                 self.callbackBlock(weakSelf,
                                    arg,
-                                   TapGR);
+                                   self.tapGR);
             }
         }, self.target)];
     }
@@ -102,7 +102,7 @@ static char *UIView_Gesture_screenEdgePanGR = "UIView_Gesture_screenEdgePanGR";
             if (self.callbackBlock) {
                 self.callbackBlock(weakSelf,
                                    arg,
-                                   SwipeGR);
+                                   self.swipeGR);
             }
         }, self.target)];
     }
@@ -115,7 +115,7 @@ static char *UIView_Gesture_screenEdgePanGR = "UIView_Gesture_screenEdgePanGR";
             if (self.callbackBlock) {
                 self.callbackBlock(weakSelf,
                                    arg,
-                                   PanGR);
+                                   self.panGR);
             }
         }, self.target)];
     }
@@ -128,7 +128,7 @@ static char *UIView_Gesture_screenEdgePanGR = "UIView_Gesture_screenEdgePanGR";
             if (self.callbackBlock) {
                 self.callbackBlock(weakSelf,
                                    arg,
-                                   PinchGR);
+                                   self.pinchGR);
             }
         }, self.target)];
     }
@@ -141,7 +141,7 @@ static char *UIView_Gesture_screenEdgePanGR = "UIView_Gesture_screenEdgePanGR";
             if (self.callbackBlock) {
                 self.callbackBlock(weakSelf,
                                    arg,
-                                   PinchGR);
+                                   self.pinchGR);
             }
         }, self.target)];
     }
@@ -154,7 +154,7 @@ static char *UIView_Gesture_screenEdgePanGR = "UIView_Gesture_screenEdgePanGR";
             if (self.callbackBlock) {
                 self.callbackBlock(weakSelf,
                                    arg,
-                                   PinchGR);
+                                   self.pinchGR);
             }
         }, self.target)];
     }
@@ -290,7 +290,7 @@ static char *UIView_Gesture_screenEdgePanGR = "UIView_Gesture_screenEdgePanGR";
             if (self.callbackBlock) {
                 self.callbackBlock(weakSelf,
                                    arg,
-                                   LongPressGR);
+                                   self.longPressGR);
             }
         }, self.target)];
         if (self.minimumPressDuration != 0) {

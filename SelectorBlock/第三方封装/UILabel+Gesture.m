@@ -12,13 +12,28 @@
 -(void)layoutSubviews{
     [super layoutSubviews];
     NSLog(@"给UILabel的子类加手势");
+    
+//    {// B
+//        self.userInteractionEnabled = YES;
+//        self.target = self;
+//        self.numberOfTouchesRequired = 1;
+//        self.minimumPressDuration = 1;
+//        self.longPressGR.enabled = YES;
+//    }
+    
     {
         self.userInteractionEnabled = YES;
         self.target = self;
         self.numberOfTouchesRequired = 1;
-        self.numberOfTapsRequired = 1;
-        self.tapGR.enabled = YES;
-//        self.longPressGR.enabled = YES;
+        self.minimumPressDuration = 1;
+        
+        
+        self.longPressGR.enabled = YES;
+        {
+            self.tapGR.enabled = YES;
+            self.numberOfTapsRequired = 1;
+        }
+        
         @weakify(self)
         self.callbackBlock = ^(id weakSelf,
                                id arg,
@@ -36,6 +51,7 @@
 // 点击文本处理链接跳转
 -(void)clickLink{
     NSDataDetector *detector = [[NSDataDetector alloc] initWithTypes:NSTextCheckingTypeLink error:nil];
+    //通过检测字符串最后几位是否是.com .cn...来进行判定
     NSArray *checkArr = [detector matchesInString:self.text
                                           options:0
                                             range:NSMakeRange(0, self.text.length)];

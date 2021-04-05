@@ -419,8 +419,8 @@
 		C5D8D85D260CC89300BDAF76 /* NSObject+DefConfig */ = {
 			isa = PBXGroup;
 			children = (
-				C5D8D85E260CC89300BDAF76 /* NSObject+DefConfig.m */,
 				C5D8D85F260CC89300BDAF76 /* NSObject+DefConfig.h */,
+				C5D8D85E260CC89300BDAF76 /* NSObject+DefConfig.m */,
 			);
 			path = "NSObject+DefConfig";
 			sourceTree = "<group>";

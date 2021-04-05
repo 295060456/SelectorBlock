@@ -54,7 +54,6 @@ static char *NSObject_RichText_dataString = "NSObject_RichText_dataString";
     for (RichLabelDataStringsModel *model in richTextDataConfigMutArr) {
         if (model.subString) {
             resultString = [resultString stringByAppendingString:model.subString];
-            NSLog(@"resultString = %@",resultString);
         }
     }
 
@@ -64,9 +63,7 @@ static char *NSObject_RichText_dataString = "NSObject_RichText_dataString";
     
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:resultString];
     
-    for (int i = 0; i < richTextDataConfigMutArr.count; i++) {
-        RichLabelDataStringsModel *richLabelDataStringsModel = (RichLabelDataStringsModel *)richTextDataConfigMutArr[i];
-        
+    for (RichLabelDataStringsModel *richLabelDataStringsModel in richTextDataConfigMutArr) {
         //添加字体 & 设置作用域
         if (richLabelDataStringsModel.font) {
             [attrString addAttribute:NSFontAttributeName
@@ -87,17 +84,13 @@ static char *NSObject_RichText_dataString = "NSObject_RichText_dataString";
         }
         //添加下划线 & 设置作用域
         [attrString addAttribute:NSUnderlineStyleAttributeName
-                        value:[NSNumber numberWithInteger:richLabelDataStringsModel.underlineStyle]
-                        range:richLabelDataStringsModel.range];
+                           value:[NSNumber numberWithInteger:richLabelDataStringsModel.underlineStyle]
+                           range:richLabelDataStringsModel.range];
         //添加超链接 & 设置作用域
         [attrString addAttribute:NSLinkAttributeName
                            value:[NSURL URLWithString:richLabelDataStringsModel.urlStr]
                            range:richLabelDataStringsModel.range];
-        
-        NSLog(@"");
     }
-    NSLog(@"");
-    
     return attrString;
 }
 #pragma mark —— @property(nonatomic,strong)NSString *dataString;//总的字符串
@@ -113,3 +106,25 @@ static char *NSObject_RichText_dataString = "NSObject_RichText_dataString";
 }
 
 @end
+
+ //NSFontAttributeName               字号 UIFont 默认12
+ //NSParagraphStyleAttributeName     段落样式  NSParagraphStyle
+ //NSForegroundColorAttributeName    前景色   UIColor
+ //NSBackgroundColorAttributeName    背景色   UIColor
+ //NSObliquenessAttributeName        字体倾斜     NSNumber
+ //NSExpansionAttributeName          字体加粗     NSNumber  比例 0就是不变 1增加一倍
+ //NSKernAttributeName               字间距   CGFloat
+ //NSUnderlineStyleAttributeName     下划线     1或0
+ //NSUnderlineColorAttributeName     下划线颜色
+ //NSStrikethroughStyleAttributeName 删除线   1或0
+ //NSStrikethroughColorAttributeName 某种颜色
+ //NSStrokeColorAttributeName        same as ForegroundColor
+ //NSStrokeWidthAttributeName        CGFloat
+ //NSLigatureAttributeName           连笔字  1或0  没看出效果
+ //NSShadowAttributeName             阴影    NSShawdow
+ //NSTextEffectAttributeName         设置文本特殊效果，取值为 NSString 对象，目前只有图版印刷效果可用：
+ //NSAttachmentAttributeName         NSTextAttachment  设置文本附件,常用插入图片
+ //NSLinkAttributeName               链接  NSURL (preferred) or NSString
+ //NSBaselineOffsetAttributeName     基准线偏移   NSNumber
+ //NSWritingDirectionAttributeName   文字方向     @[@(1),@(2)]  分别代表不同的文字出现方向等等，我想你一定用不到它 - -
+ //NSVerticalGlyphFormAttributeName  水平或者竖直文本  1竖直 0水平 在iOS没卵用，不支持竖版
