@@ -21,6 +21,8 @@
 //        self.longPressGR.enabled = YES;
 //    }
     
+    
+    
     {
         self.userInteractionEnabled = YES;
         self.target = self;

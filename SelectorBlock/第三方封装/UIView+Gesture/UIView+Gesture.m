@@ -297,9 +297,9 @@ static char *UIView_Gesture_screenEdgePanGR = "UIView_Gesture_screenEdgePanGR";
             LongPressGR.minimumPressDuration = self.minimumPressDuration;//longPressGR最小长按时间
         }
         
-        if (self.numberOfTapsRequired != 0) {
-            LongPressGR.numberOfTapsRequired = self.numberOfTapsRequired;//设置轻拍次数
-        }
+//        if (self.numberOfTapsRequired != 0) {
+//            LongPressGR.numberOfTapsRequired = self.numberOfTapsRequired;//设置轻拍次数
+//        }
         
         if (self.numberOfTouchesRequired != 0) {
             LongPressGR.numberOfTouchesRequired = self.numberOfTouchesRequired;//设置手指字数
@@ -332,6 +332,11 @@ static char *UIView_Gesture_screenEdgePanGR = "UIView_Gesture_screenEdgePanGR";
                                                         action:selectorBlocks(^(id _Nullable weakSelf,
                                                                                 id _Nullable arg) {
             @strongify(self)
+            
+//            if (self.viewBlock) {
+//                self.viewBlock(@1);
+//            }
+            
             if (self.callbackBlock) {
                 self.callbackBlock(weakSelf,
                                    arg,

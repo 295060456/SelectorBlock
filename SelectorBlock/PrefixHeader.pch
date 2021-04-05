@@ -154,6 +154,7 @@ static inline CGFloat TabBarHeightByBottomSafeArea(UITabBarController * _Nullabl
 #import "DebugLogDescription.h"
 
 #import "NSObject+Other.h"
+#import "NSObject+CallBackInfoByBlock.h"
 #import "UIView+Gesture.h"
 #import "UIViewController+BaseVC.h"
 

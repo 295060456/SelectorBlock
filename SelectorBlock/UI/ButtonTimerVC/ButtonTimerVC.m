@@ -6,6 +6,7 @@
 //
 
 #import "ButtonTimerVC.h"
+#import "NSObject+CallBackInfoByBlock.h"
 
 #import "UIButton+Timer.h"
 #import "LoadingImage.h"
@@ -171,34 +172,49 @@
     }return _btnConfigModel;
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    return YES;
+}
+
 -(UIImageView *)mainIMGV{
     if (!_mainIMGV) {
         _mainIMGV = UIImageView.new;
-        _mainIMGV.userInteractionEnabled = YES;
-        
-        {// B
+
+        {// A
             _mainIMGV.userInteractionEnabled = YES;
             _mainIMGV.target = self;
             _mainIMGV.numberOfTouchesRequired = 1;
-            _mainIMGV.minimumPressDuration = 1;
-            _mainIMGV.longPressGR.enabled = YES;
-        }
-        
-        {// A
+            _mainIMGV.numberOfTapsRequired = 1;
+            _mainIMGV.tapGR.enabled = YES;
+
+            @weakify(self)
+            [_mainIMGV actionViewBlock:^(id data) {
+                NSLog(@"678976435");
+            }];
             
-//            _mainIMGV.userInteractionEnabled = YES;
-//            _mainIMGV.target = self;
-//            _mainIMGV.numberOfTouchesRequired = 1;
-//            _mainIMGV.numberOfTapsRequired = 1;
-//            _mainIMGV.tapGR.enabled = YES;
-//            @weakify(self)
             _mainIMGV.callbackBlock = ^(id weakSelf,
                                         id arg,
                                         UIGestureRecognizer *data3) {
-//                @strongify(self)
-                NSLog(@"295006");
-            };
+                @strongify(self)
+                NSLog(@"678976435");
+             };
         }
+        
+       {// B
+           _mainIMGV.userInteractionEnabled = YES;
+           _mainIMGV.target = self;
+           _mainIMGV.numberOfTouchesRequired = 1;
+           _mainIMGV.minimumPressDuration = 1;
+           _mainIMGV.longPressGR.enabled = YES;
+
+           @weakify(self)
+           _mainIMGV.callbackBlock = ^(id weakSelf,
+                                       id arg,
+                                       UIGestureRecognizer *data3) {
+               @strongify(self)
+               NSLog(@"123456");
+            };
+       }
         _mainIMGV.backgroundColor = UIColor.redColor;
         [self.view addSubview:_mainIMGV];
         [_mainIMGV mas_makeConstraints:^(MASConstraintMaker *make) {
