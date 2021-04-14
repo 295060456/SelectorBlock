@@ -26,6 +26,12 @@
 #import "ReactiveObjC.h"
 #endif
 
+#if __has_include(<MJExtension/MJExtension.h>)
+#import <MJExtension/MJExtension.h>
+#else
+#import "MJExtension.h"
+#endif
+
 #import "WHToast+DDToast.h"
 #import "AABlock.h"
 
