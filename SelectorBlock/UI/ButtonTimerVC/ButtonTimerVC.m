@@ -19,6 +19,9 @@
 @property(nonatomic,strong)UIButton *btn;
 @property(nonatomic,strong)UIImageView *mainIMGV;
 
+
+@property(nonatomic,strong)DispatchTimerManager *dispatchTimer;
+
 @end
 
 @implementation ButtonTimerVC
@@ -42,6 +45,20 @@
     self.mainIMGV.alpha = 1;
 }
 
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+//    self.dispatchTimer = [DispatchTimerManager scheduledTimerWithTimeInterval:.5f
+//                                                                      repeats:YES
+//                                                                        block:^(DispatchTimerManager * _Nonnull timer) {
+//        NSLog(@"sde");
+//    }];
+    
+    self.dispatchTimer = [[DispatchTimerManager alloc] initWithTimeInterval:3 interval:1 target:self selector:@selector(demo) userInfo:nil repeats:YES];
+    [self.dispatchTimer resume];
+}
+
+-(void)demo{
+    NSLog(@"sde");
+}
 
 -(void)primitAttributeStr {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, self.view.bounds.size.width, 100)];
