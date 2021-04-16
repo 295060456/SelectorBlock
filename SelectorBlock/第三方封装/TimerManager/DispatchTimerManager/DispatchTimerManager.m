@@ -8,38 +8,32 @@
 #import "DispatchTimerManager.h"
 
 #define lock(...) \
-    dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);\
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);\
     __VA_ARGS__;\
-    dispatch_semaphore_signal(_semaphore);
+    dispatch_semaphore_signal(self.semaphore);
 
 @interface DispatchTimerManager ()
 
+@property(nonatomic,retain)dispatch_source_t dispatchTimer;
+@property(nonatomic,assign)BOOL valid;
+@property(nonatomic,assign)BOOL running;
+@property(nonatomic,assign)BOOL repeats;
+
 @end
 
-@implementation DispatchTimerManager{
-    BOOL _valid;
-    BOOL _repeats;
-    BOOL _running;
-    NSTimeInterval _start;
-    NSTimeInterval _timeInterval;
-    dispatch_source_t _timer;
-    dispatch_semaphore_t _semaphore;
-    SEL _selector;
-    id _userInfo;
-    __weak id _target;
-}
+@implementation DispatchTimerManager
 
-- (void)dealloc {
+-(void)dealloc {
     NSLog(@"Running self.class = %@;NSStringFromSelector(_cmd) = '%@';__FUNCTION__ = %s", self.class, NSStringFromSelector(_cmd),__FUNCTION__);
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self invalidate];
 }
 
-+ (DispatchTimerManager *)scheduledTimerWithTimeInterval:(NSTimeInterval)interval
-                                                  target:(id)target
-                                                selector:(SEL)selector
-                                                userInfo:(nullable id)userInfo
-                                                 repeats:(BOOL)repeats {
++(DispatchTimerManager *)scheduledTimerWithTimeInterval:(NSTimeInterval)interval
+                                                 target:(id)target
+                                               selector:(SEL)selector
+                                               userInfo:(nullable id)userInfo
+                                                repeats:(BOOL)repeats {
     DispatchTimerManager *timer = [[DispatchTimerManager alloc] initWithTimeInterval:0
                                                                             interval:interval
                                                                               target:target
@@ -50,9 +44,9 @@
     return timer;
 }
 
-+ (DispatchTimerManager *)scheduledTimerWithTimeInterval:(NSTimeInterval)interval
-                                                 repeats:(BOOL)repeats
-                                                   block:(void (^)(DispatchTimerManager *timer))block {
++(DispatchTimerManager *)scheduledTimerWithTimeInterval:(NSTimeInterval)interval
+                                                repeats:(BOOL)repeats
+                                                  block:(void (^)(DispatchTimerManager *timer))block {
     NSParameterAssert(block);
     DispatchTimerManager *timer = [[DispatchTimerManager alloc] initWithTimeInterval:0
                                                                             interval:interval
@@ -64,36 +58,72 @@
     return timer;
 }
 
-- (instancetype)initWithTimeInterval:(NSTimeInterval)start
-                            interval:(NSTimeInterval)interval
-                              target:(id)target
-                            selector:(SEL)selector
-                            userInfo:(nullable id)userInfo
-                             repeats:(BOOL)repeats {
+-(instancetype)initWithTimeInterval:(NSTimeInterval)start
+                           interval:(NSTimeInterval)interval
+                             target:(id)target
+                           selector:(SEL)selector
+                           userInfo:(nullable id)userInfo
+                            repeats:(BOOL)repeats {
     if (self = [super init]) {
-        _valid = YES;
-        _start = start;
-        _timeInterval = interval;
-        _repeats = repeats;
-        _target = target;
-        _selector = selector;
-        _userInfo = userInfo;
-        _semaphore = dispatch_semaphore_create(1);
-
-        _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER,
-                                        0,
-                                        0,
-                                        dispatch_get_main_queue());
-        dispatch_source_set_timer(_timer,
-                                  dispatch_time(DISPATCH_TIME_NOW, start * NSEC_PER_SEC),
-                                  interval * NSEC_PER_SEC,
-                                  0);
-        __weak typeof(self) weakSelf = self;
-        dispatch_source_set_event_handler(_timer, ^{[weakSelf fire];});
+        self.valid = YES;
+        self.start = start;
+        self.timeInterval = interval;
+        self.repeats = repeats;
+        self.target = target;
+        self.selector = selector;
+        self.userInfo = userInfo;
+        [self createDispatchTimer];
     }return self;
 }
 
-+ (void)executeBlockFromTimer:(DispatchTimerManager *)aTimer {
+-(void)createDispatchTimer{
+    dispatch_source_set_timer(self.dispatchTimer,
+                              dispatch_time(DISPATCH_TIME_NOW, self.start * NSEC_PER_SEC),
+                              self.timeInterval * NSEC_PER_SEC,
+                              0);
+    @weakify(self)
+    dispatch_source_set_event_handler(self.dispatchTimer, ^{[self_weak_ fire];});
+}
+
+- (void)fire {
+    if (!_valid) {return;}
+    if (!self.target) {
+        [self invalidate];
+    } else {
+        // 执行selector
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [self.target performSelector:self.selector withObject:self];
+#pragma clang diagnostic pop
+        if (!self.repeats) {
+            [self invalidate];
+        }
+    }
+}
+/// 启动
+- (void)resume {
+    if (self.running) return;
+    dispatch_resume(self.dispatchTimer);// 恢复dispatch定时器计时
+    self.running = YES;
+}
+/// 暂停
+- (void)suspend {
+    if (!self.running) return;
+    dispatch_suspend(self.dispatchTimer);// 暂停dispatch定时器计时【特别注意：dispatch_suspend 之后的 Timer，是不能被释放的，否则会引起崩溃】
+    self.running = NO;
+}
+/// 关闭
+- (void)invalidate {
+    lock(if (self.valid) {
+        dispatch_source_cancel(self.dispatchTimer);// 真正意义上的停止dispatch定时器计时
+        _dispatchTimer = NULL;
+        _target = NULL;
+        _userInfo = NULL;
+        _valid = NO;
+    })
+}
+
++(void)executeBlockFromTimer:(DispatchTimerManager *)aTimer {
     void (^block)(DispatchTimerManager *) = [aTimer userInfo];
     if (block) block(aTimer);
 }
@@ -125,62 +155,20 @@ dispatch_source_t CreateDispatchTimer(uint64_t interval,
         dispatch_resume(timer);// 恢复dispatch定时器计时
     }return timer;
 }
-
-- (void)fire {
-    if (!_valid) {return;}
-    lock(id target = _target;)
-    if (!target) {
-        [self invalidate];
-    } else {
-        // 执行selector
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [target performSelector:_selector withObject:self];
-#pragma clang diagnostic pop
-        if (!_repeats) {
-            [self invalidate];
-        }
-    }
-}
-/// 启动
-- (void)resume {
-    if (_running) return;
-    dispatch_resume(_timer);// 恢复dispatch定时器计时
-    _running = YES;
-}
-/// 暂停
-- (void)suspend {
-    if (!_running) return;
-    dispatch_suspend(_timer);// 暂停dispatch定时器计时【特别注意：dispatch_suspend 之后的 Timer，是不能被释放的，否则会引起崩溃】
-    _running = NO;
-}
-/// 关闭
-- (void)invalidate {
-    dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
-    if (_valid) {
-        dispatch_source_cancel(_timer);// 真正意义上的停止dispatch定时器计时
-        _timer = NULL;
-        _target = NULL;
-        _userInfo = NULL;
-        _valid = NO;
-    }
-    dispatch_semaphore_signal(_semaphore);
+#pragma mark —— lazyLoad
+-(dispatch_semaphore_t)semaphore{
+    if (!_semaphore) {
+        _semaphore = dispatch_semaphore_create(1);
+    }return _semaphore;
 }
 
-- (id)userInfo {
-    lock(id ui = _userInfo) return ui;
-}
-
-- (BOOL)repeats {
-    lock(BOOL re = _repeats) return re;
-}
-
-- (NSTimeInterval)timeInterval {
-    lock(NSTimeInterval ti = _timeInterval) return ti;
-}
-
-- (BOOL)isValid {
-    lock(BOOL va = _valid) return va;
+-(dispatch_source_t)dispatchTimer{
+    if (!_dispatchTimer) {
+        _dispatchTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER,
+                                                0,
+                                                0,
+                                                dispatch_get_main_queue());
+    }return _dispatchTimer;
 }
 
 @end

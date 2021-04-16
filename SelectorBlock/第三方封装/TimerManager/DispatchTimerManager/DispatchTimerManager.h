@@ -20,16 +20,25 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface DispatchTimerManager : NSObject
 
+@property(readonly)BOOL repeats;
+@property(readonly,getter=isValid)BOOL valid;
+@property(nonatomic,assign)NSTimeInterval start;
+@property(nonatomic,assign)NSTimeInterval timeInterval;
+@property(nonatomic,retain)dispatch_semaphore_t semaphore;
+@property(nonatomic,assign)SEL selector;
+@property(nonatomic,nullable,retain)id userInfo;
+@property(nonatomic,weak)id target;
+
 /// 同下面的方法，不过自动开始执行
-+ (DispatchTimerManager *)scheduledTimerWithTimeInterval:(NSTimeInterval)interval
-                                                  target:(id)aTarget
-                                                selector:(SEL)aSelector
-                                                userInfo:(nullable id)userInfo
-                                                 repeats:(BOOL)repeats;
++(DispatchTimerManager *)scheduledTimerWithTimeInterval:(NSTimeInterval)interval
+                                                 target:(id)aTarget
+                                               selector:(SEL)aSelector
+                                               userInfo:(nullable id)userInfo
+                                                repeats:(BOOL)repeats;
 /// 扩充block
-+ (DispatchTimerManager *)scheduledTimerWithTimeInterval:(NSTimeInterval)interval
-                                                 repeats:(BOOL)repeats
-                                                   block:(void (^)(DispatchTimerManager *timer))block;
++(DispatchTimerManager *)scheduledTimerWithTimeInterval:(NSTimeInterval)interval
+                                                repeats:(BOOL)repeats
+                                                  block:(void (^)(DispatchTimerManager *timer))block;
 /// 创建一个定时器并返回，但是并不会自动执行，需要手动调用resume方法
 /// @param start 定时器启动时间
 /// @param interval   间隔多久开始执行selector
@@ -37,42 +46,38 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param selector 执行的任务
 /// @param userInfo 绑定信息
 /// @param repeats 是否重复
-- (instancetype)initWithTimeInterval:(NSTimeInterval)start
-                            interval:(NSTimeInterval)interval
-                              target:(id)target
-                            selector:(SEL)selector
-                            userInfo:(nullable id)userInfo
-                             repeats:(BOOL)repeats;
+-(instancetype)initWithTimeInterval:(NSTimeInterval)start
+                           interval:(NSTimeInterval)interval
+                             target:(id)target
+                           selector:(SEL)selector
+                           userInfo:(nullable id)userInfo
+                            repeats:(BOOL)repeats;
+-(void)createDispatchTimer;
 /// 启动
-- (void)resume;
+-(void)resume;
 /// 暂停
-- (void)suspend;
+-(void)suspend;
 /// 关闭
-- (void)invalidate;
-
-@property(readonly)BOOL repeats;
-@property(readonly)NSTimeInterval timeInterval;
-@property(readonly,getter=isValid)BOOL valid;
-@property(nullable,readonly,retain)id userInfo;
+-(void)invalidate;
 
 @end
 
 NS_ASSUME_NONNULL_END
 
 /* 使用示例：
- {
+ { // 自启动
      self.sTimer = [SSTimer scheduledTimerWithTimeInterval:.5f repeats:YES block:^(SSTimer * _Nonnull timer) {
          NSLog(@"sde");
      }];
  }
  //或者
- {
+ { // 手动启动
      self.dispatchTimer = [[DispatchTimerManager alloc] initWithTimeInterval:3
                                                                     interval:1
                                                                       target:self
                                                                     selector:@selector(demo1:)
                                                                     userInfo:nil
                                                                      repeats:YES];
-     [self.dispatchTimer resume];//不写这一句会崩溃
+     [self.dispatchTimer resume];
  }
  **/
