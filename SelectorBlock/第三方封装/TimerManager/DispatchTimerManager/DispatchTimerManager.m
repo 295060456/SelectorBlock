@@ -20,6 +20,7 @@
     BOOL _valid;
     BOOL _repeats;
     BOOL _running;
+    NSTimeInterval _start;
     NSTimeInterval _timeInterval;
     dispatch_source_t _timer;
     dispatch_semaphore_t _semaphore;
@@ -71,13 +72,14 @@
                              repeats:(BOOL)repeats {
     if (self = [super init]) {
         _valid = YES;
+        _start = start;
         _timeInterval = interval;
         _repeats = repeats;
         _target = target;
         _selector = selector;
         _userInfo = userInfo;
         _semaphore = dispatch_semaphore_create(1);
-        __weak typeof(self) weakSelf = self;
+
         _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER,
                                         0,
                                         0,
@@ -86,6 +88,7 @@
                                   dispatch_time(DISPATCH_TIME_NOW, start * NSEC_PER_SEC),
                                   interval * NSEC_PER_SEC,
                                   0);
+        __weak typeof(self) weakSelf = self;
         dispatch_source_set_event_handler(_timer, ^{[weakSelf fire];});
     }return self;
 }

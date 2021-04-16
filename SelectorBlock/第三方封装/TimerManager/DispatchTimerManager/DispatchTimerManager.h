@@ -60,5 +60,19 @@ NS_ASSUME_NONNULL_BEGIN
 NS_ASSUME_NONNULL_END
 
 /* 使用示例：
- 
+ {
+     self.sTimer = [SSTimer scheduledTimerWithTimeInterval:.5f repeats:YES block:^(SSTimer * _Nonnull timer) {
+         NSLog(@"sde");
+     }];
+ }
+ //或者
+ {
+     self.dispatchTimer = [[DispatchTimerManager alloc] initWithTimeInterval:3
+                                                                    interval:1
+                                                                      target:self
+                                                                    selector:@selector(demo1:)
+                                                                    userInfo:nil
+                                                                     repeats:YES];
+     [self.dispatchTimer resume];//不写这一句会崩溃
+ }
  **/

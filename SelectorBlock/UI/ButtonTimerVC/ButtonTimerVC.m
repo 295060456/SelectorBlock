@@ -13,11 +13,15 @@
 
 #import "UILabel+Gesture.h"
 
+#import "DispatchTimerManager.h"
+
 @interface ButtonTimerVC ()
 
 @property(nonatomic,strong)ButtonTimerConfigModel *btnConfigModel;
 @property(nonatomic,strong)UIButton *btn;
 @property(nonatomic,strong)UIImageView *mainIMGV;
+
+//@property (nonatomic, strong) DispatchTimerManager *sTimer;
 
 
 @property(nonatomic,strong)DispatchTimerManager *dispatchTimer;
@@ -46,14 +50,26 @@
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-//    self.dispatchTimer = [DispatchTimerManager scheduledTimerWithTimeInterval:.5f
-//                                                                      repeats:YES
-//                                                                        block:^(DispatchTimerManager * _Nonnull timer) {
-//        NSLog(@"sde");
-//    }];
-    
-    self.dispatchTimer = [[DispatchTimerManager alloc] initWithTimeInterval:3 interval:1 target:self selector:@selector(demo) userInfo:nil repeats:YES];
-    [self.dispatchTimer resume];
+
+//    {
+//        self.sTimer = [SSTimer scheduledTimerWithTimeInterval:.5f repeats:YES block:^(SSTimer * _Nonnull timer) {
+//            NSLog(@"sde");
+//        }];
+//    }
+    //或者
+    {
+        self.dispatchTimer = [[DispatchTimerManager alloc] initWithTimeInterval:3
+                                                                       interval:1
+                                                                         target:self
+                                                                       selector:@selector(demo1:)
+                                                                       userInfo:nil
+                                                                        repeats:YES];
+        [self.dispatchTimer resume];//不写这一句会崩溃
+    }
+}
+
+- (void)demo1:(DispatchTimerManager *)timer {
+    NSLog(@"a is");
 }
 
 -(void)demo{
