@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface DispatchTimerManager : NSObject
 
-@property(readonly)BOOL repeats;
+@property(nonatomic,assign)BOOL repeats;
 @property(readonly,getter=isValid)BOOL valid;
 @property(nonatomic,assign)NSTimeInterval start;
 @property(nonatomic,assign)NSTimeInterval timeInterval;
@@ -72,19 +72,33 @@ NS_ASSUME_NONNULL_BEGIN
 NS_ASSUME_NONNULL_END
 
 /* 使用示例：
- { // 自启动
-     self.sTimer = [SSTimer scheduledTimerWithTimeInterval:.5f repeats:YES block:^(SSTimer * _Nonnull timer) {
-         NSLog(@"sde");
-     }];
- }
- //或者
- { // 手动启动
-     self.dispatchTimer = [[DispatchTimerManager alloc] initWithTimeInterval:3
-                                                                    interval:1
-                                                                      target:self
-                                                                    selector:@selector(demo1:)
-                                                                    userInfo:nil
-                                                                     repeats:YES];
-     [self.dispatchTimer resume];
- }
+     {
+         self.dispatchTimer = [DispatchTimerManager scheduledTimerWithTimeInterval:.5f
+                                                                           repeats:YES
+                                                                             block:^(DispatchTimerManager * _Nonnull timer) {
+             NSLog(@"sde");
+         }];
+     }
+     // 或者
+     {
+         self.dispatchTimer = [[DispatchTimerManager alloc] initWithTimeInterval:3
+                                                                        interval:1
+                                                                          target:self
+                                                                        selector:@selector(demo1:)
+                                                                        userInfo:nil
+                                                                         repeats:YES];
+         [self.dispatchTimer resume];
+     }
+     // 亦或者
+     {
+         self.dispatchTimer = DispatchTimerManager.new;
+         self.dispatchTimer.start = 3;
+         self.dispatchTimer.timeInterval = 1;
+         self.dispatchTimer.target = self;
+         self.dispatchTimer.selector = @selector(demo1:);
+         self.dispatchTimer.repeats = YES;
+
+         [self.dispatchTimer createDispatchTimer];
+         [self.dispatchTimer resume];
+     }
  **/

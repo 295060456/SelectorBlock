@@ -360,8 +360,8 @@
 		C5B7BCE62609AC0000BFF168 /* TimerManager */ = {
 			isa = PBXGroup;
 			children = (
-				C5938E6F2627266300370099 /* DispatchTimerManager */,
 				C5B7BCF22609AC0000BFF168 /* CADisplayLink_TimerManager */,
+				C5938E6F2627266300370099 /* DispatchTimerManager */,
 				C5B7BCEF2609AC0000BFF168 /* Nanosecond_TimerManager */,
 				C5B7BCE82609AC0000BFF168 /* NSTimerManager */,
 				C5B7BCE72609AC0000BFF168 /* TimerManager_DefineStructure.h */,

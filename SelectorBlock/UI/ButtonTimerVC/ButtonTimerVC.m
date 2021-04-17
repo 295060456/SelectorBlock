@@ -57,19 +57,33 @@
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
 
 //    {
-//        self.sTimer = [SSTimer scheduledTimerWithTimeInterval:.5f repeats:YES block:^(SSTimer * _Nonnull timer) {
+//        self.dispatchTimer = [DispatchTimerManager scheduledTimerWithTimeInterval:.5f
+//                                                                          repeats:YES
+//                                                                            block:^(DispatchTimerManager * _Nonnull timer) {
 //            NSLog(@"sde");
 //        }];
 //    }
-    //或者
+//    // 或者
+//    {
+//        self.dispatchTimer = [[DispatchTimerManager alloc] initWithTimeInterval:3
+//                                                                       interval:1
+//                                                                         target:self
+//                                                                       selector:@selector(demo1:)
+//                                                                       userInfo:nil
+//                                                                        repeats:YES];
+//        [self.dispatchTimer resume];
+//    }
+    // 亦或者
     {
-        self.dispatchTimer = [[DispatchTimerManager alloc] initWithTimeInterval:3
-                                                                       interval:1
-                                                                         target:self
-                                                                       selector:@selector(demo1:)
-                                                                       userInfo:nil
-                                                                        repeats:YES];
-//        [self.dispatchTimer resume];//不写这一句会崩溃
+        self.dispatchTimer = DispatchTimerManager.new;
+        self.dispatchTimer.start = 3;
+        self.dispatchTimer.timeInterval = 1;
+        self.dispatchTimer.target = self;
+        self.dispatchTimer.selector = @selector(demo1:);
+        self.dispatchTimer.repeats = YES;
+
+        [self.dispatchTimer createDispatchTimer];
+        [self.dispatchTimer resume];
     }
 }
 

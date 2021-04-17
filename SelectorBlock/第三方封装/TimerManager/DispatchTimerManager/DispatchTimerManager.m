@@ -17,7 +17,6 @@
 @property(nonatomic,retain)dispatch_source_t dispatchTimer;
 @property(nonatomic,assign)BOOL valid;
 @property(nonatomic,assign)BOOL running;
-@property(nonatomic,assign)BOOL repeats;
 
 @end
 
@@ -78,8 +77,6 @@
                            userInfo:(nullable id)userInfo
                             repeats:(BOOL)repeats {
     if (self = [super init]) {
-        self.state = DispatchTimerState_init;
-        self.valid = YES;
         self.start = start;
         self.timeInterval = interval;
         self.repeats = repeats;
@@ -91,6 +88,8 @@
 }
 
 -(void)createDispatchTimer{
+    self.state = DispatchTimerState_init;
+    self.valid = YES;
     dispatch_source_set_timer(self.dispatchTimer,
                               dispatch_time(DISPATCH_TIME_NOW, self.start * NSEC_PER_SEC),
                               self.timeInterval * NSEC_PER_SEC,
