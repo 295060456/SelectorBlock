@@ -20,15 +20,15 @@
 @property(nonatomic,strong)ButtonTimerConfigModel *btnConfigModel;
 @property(nonatomic,strong)UIButton *btn;
 @property(nonatomic,strong)UIImageView *mainIMGV;
-
-//@property (nonatomic, strong) DispatchTimerManager *sTimer;
-
-
 @property(nonatomic,strong)DispatchTimerManager *dispatchTimer;
 
 @end
 
 @implementation ButtonTimerVC
+
+-(void)dealloc {
+    NSLog(@"Running self.class = %@;NSStringFromSelector(_cmd) = '%@';__FUNCTION__ = %s", self.class, NSStringFromSelector(_cmd),__FUNCTION__);
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -49,6 +49,11 @@
     self.mainIMGV.alpha = 1;
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.dispatchTimer invalidate];
+}
+
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
 
 //    {
@@ -64,7 +69,7 @@
                                                                        selector:@selector(demo1:)
                                                                        userInfo:nil
                                                                         repeats:YES];
-        [self.dispatchTimer resume];//不写这一句会崩溃
+//        [self.dispatchTimer resume];//不写这一句会崩溃
     }
 }
 

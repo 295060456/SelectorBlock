@@ -26,6 +26,19 @@
 -(void)dealloc {
     NSLog(@"Running self.class = %@;NSStringFromSelector(_cmd) = '%@';__FUNCTION__ = %s", self.class, NSStringFromSelector(_cmd),__FUNCTION__);
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    /*
+     dispatch_suspend 和 dispatch_resume 应该是成对出现的。
+     两者分别会减少和增加 dispatch 对象的挂起计数
+     但是没有 API 获取当前是挂起还是执行状态，所以需要自己记录
+     
+     ❤️暂停dispatch定时器计时【特别注意：dispatch_suspend 之后的 Timer，是不能被释放的，否则会引起崩溃】
+     **/
+    if (self.state == DispatchTimerState_init ||
+        self.state == DispatchTimerState_suspend) {
+        [self resume];
+    }
+    
     [self invalidate];
 }
 
@@ -65,6 +78,7 @@
                            userInfo:(nullable id)userInfo
                             repeats:(BOOL)repeats {
     if (self = [super init]) {
+        self.state = DispatchTimerState_init;
         self.valid = YES;
         self.start = start;
         self.timeInterval = interval;
@@ -103,13 +117,15 @@
 /// 启动
 - (void)resume {
     if (self.running) return;
+    self.state = DispatchTimerState_resume;
     dispatch_resume(self.dispatchTimer);// 恢复dispatch定时器计时
     self.running = YES;
 }
 /// 暂停
 - (void)suspend {
     if (!self.running) return;
-    dispatch_suspend(self.dispatchTimer);// 暂停dispatch定时器计时【特别注意：dispatch_suspend 之后的 Timer，是不能被释放的，否则会引起崩溃】
+    self.state = DispatchTimerState_suspend;
+    dispatch_suspend(self.dispatchTimer);// ❤️暂停dispatch定时器计时【特别注意：dispatch_suspend 之后的 Timer，是不能被释放的，否则会引起崩溃】
     self.running = NO;
 }
 /// 关闭

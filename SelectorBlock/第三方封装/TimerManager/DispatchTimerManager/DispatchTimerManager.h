@@ -7,6 +7,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, DispatchTimerState) {
+    DispatchTimerState_init = 0,
+    DispatchTimerState_resume,
+    DispatchTimerState_suspend
+};
+
 NS_ASSUME_NONNULL_BEGIN
 /**
     前言：
@@ -28,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)SEL selector;
 @property(nonatomic,nullable,retain)id userInfo;
 @property(nonatomic,weak)id target;
+@property(nonatomic,assign)DispatchTimerState state;
 
 /// 同下面的方法，不过自动开始执行
 +(DispatchTimerManager *)scheduledTimerWithTimeInterval:(NSTimeInterval)interval
