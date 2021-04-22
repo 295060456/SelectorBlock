@@ -540,9 +540,9 @@
 				C58D774B26304AEB00966F5F /* 播放器控制层 */,
 				C58D772C26304AEA00966F5F /* 分享控件 */,
 				C58D773426304AEA00966F5F /* 文件夹操作 */,
+				C58D753026304A7300966F5F /* JobsBaseCustomizeUIKitCore */,
 				C58D773C26304AEB00966F5F /* TimerManager */,
 				C58D773726304AEA00966F5F /* UserDefaultManager */,
-				C58D753026304A7300966F5F /* JobsBaseCustomizeUIKitCore */,
 			);
 			path = "第三方封装";
 			sourceTree = "<group>";
