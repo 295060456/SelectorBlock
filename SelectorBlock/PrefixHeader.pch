@@ -8,32 +8,8 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 
-#if __has_include(<Masonry/Masonry.h>)
-#import <Masonry/Masonry.h>
-#else
-#import "Masonry.h"
-#endif
-
-#if __has_include(<WHToast/WHToast.h>)
-#import <WHToast/WHToast.h>
-#else
-#import "WHToast.h"
-#endif
-
-#if __has_include(<ReactiveObjC/ReactiveObjC.h>)
-#import <ReactiveObjC/ReactiveObjC.h>
-#else
-#import "ReactiveObjC.h"
-#endif
-
-#if __has_include(<MJExtension/MJExtension.h>)
-#import <MJExtension/MJExtension.h>
-#else
-#import "MJExtension.h"
-#endif
-
-#import "WHToast+DDToast.h"
-#import "AABlock.h"
+#import "PodsHeader.h"
+#import "JobsBaseCustomizeUIKitCoreHeader.h"
 
 #define MainScreen          UIScreen.mainScreen.bounds.size
 #define Device_Width        MainScreen.width//获取屏幕宽高
@@ -59,109 +35,5 @@ alpha:1] \
         Stuff; \
         _Pragma("clang diagnostic pop") \
 } while (0)
-
-static inline UIWindow * getMainWindow(){
-    UIWindow *window = nil;
-    //以下方法有时候会拿不到window
-    if (@available(iOS 13.0, *)) {
-        for (UIWindowScene* windowScene in UIApplication.sharedApplication.connectedScenes){
-            if (windowScene.activationState == UISceneActivationStateForegroundActive){
-                window = windowScene.windows.firstObject;
-                return window;
-            }
-        }
-    }
-    
-//    if (JobsIMAppDelegate.sharedInstance.window) {
-//        window = JobsIMAppDelegate.sharedInstance.window;
-//        return window;
-//    }
-    
-    if (UIApplication.sharedApplication.delegate.window) {
-        window = UIApplication.sharedApplication.delegate.window;
-        return window;
-    }
-    
-    SuppressWdeprecatedDeclarationsWarning(
-        if (UIApplication.sharedApplication.keyWindow) {
-        window = UIApplication.sharedApplication.keyWindow;
-        return window;
-    });
-    
-    return window;
-}
-#pragma mark —— 安全区域
-//顶部的安全距离
-static inline CGFloat TopSafeAreaHeight(){
-    if (@available(iOS 11.0, *)) {
-        return getMainWindow().safeAreaInsets.top;
-    } else {
-        return 0.f;
-    }
-}
-//底部的安全距离，全面屏手机为34pt，非全面屏手机为0pt
-static inline CGFloat BottomSafeAreaHeight(){
-    if (@available(iOS 11.0, *)) {
-        return getMainWindow().safeAreaInsets.bottom;
-    } else {
-        return 0.f;
-    }
-}
-#pragma mark —— 状态栏高度：全面屏手机的状态栏高度为44pt，非全面屏手机的状态栏高度为20pt
-//方法一：状态栏高度
-static inline CGFloat rectOfStatusbar(){
-    SuppressWdeprecatedDeclarationsWarning(
-        if (@available(iOS 13.0, *)){
-            UIStatusBarManager *statusBarManager = getMainWindow().windowScene.statusBarManager;
-            return statusBarManager.statusBarHidden ? 0 : statusBarManager.statusBarFrame.size.height;
-        }else{
-            return UIApplication.sharedApplication.statusBarFrame.size.height;
-        });
-}
-//方法二：状态栏高度
-static inline CGFloat StatusBarHeight(){
-    if (@available(iOS 11.0, *)) {
-        return getMainWindow().safeAreaInsets.top;
-    } else {
-        return rectOfStatusbar();
-    }
-}
-/// 导航栏高度
-/// @param navigationController 传nil为系统默认navigationController高度；因为navigationController可以自定义高度，传自定义navigationController返回自定义的navigationController的高度
-static inline CGFloat NavigationHeight(UINavigationController * _Nullable navigationController){
-    if (navigationController) {
-        return navigationController.navigationBar.frame.size.height;
-    }else{
-        return 44.f;
-    }
-}
-/// 状态栏 + 导航栏高度
-/// 非刘海屏：状态栏高度(20.f) + 导航栏高度(44.f) = 64.f
-/// 刘海屏系列：状态栏高度(44.f) + 导航栏高度(44.f) = 88.f
-static inline CGFloat NavigationBarAndStatusBarHeight(UINavigationController * _Nullable navigationController){
-    return StatusBarHeight() + NavigationHeight(navigationController);
-}
-/// tabbar高度：全面屏手机比普通手机多34的安全区域
-/// @param tabBarController 传nil为系统默认tabbar高度；因为tabBarController可以自定义高度，传自定义tabBarController返回自定义的tabBarController的高度
-static inline CGFloat TabBarHeight(UITabBarController * _Nullable tabBarController){
-    //因为tabbar可以自定义高度，所以这个地方返回系统默认的49像素的高度
-    if (tabBarController) {
-        return tabBarController.tabBar.frame.size.height;;
-    }else{
-        return 49.f;
-    }
-}
-//tabbar高度：【包括了底部安全区域的TabBar高度，一般用这个】
-static inline CGFloat TabBarHeightByBottomSafeArea(UITabBarController * _Nullable tabBarController){
-    return TabBarHeight(tabBarController) + BottomSafeAreaHeight();
-}
-
-#pragma mark —— Log
-#import "DebugLogDescription.h"
-
-#import "NSObject+Other.h"
-#import "NSObject+CallBackInfoByBlock.h"
-#import "UIView+Gesture.h"
-#import "UIViewController+BaseVC.h"
 
 #endif /* PrefixHeader_pch */
