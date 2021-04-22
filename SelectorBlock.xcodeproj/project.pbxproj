@@ -152,7 +152,7 @@
 		C58D775926304AEB00966F5F /* CustomZFPlayerControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = C58D774C26304AEB00966F5F /* CustomZFPlayerControlView.m */; };
 		C58D78F926304E9200966F5F /* UILabel+Gesture.m in Sources */ = {isa = PBXBuildFile; fileRef = C58D78F726304E9200966F5F /* UILabel+Gesture.m */; };
 		C58D790126304FD600966F5F /* NSObject+RichText.m in Sources */ = {isa = PBXBuildFile; fileRef = C58D790026304FD600966F5F /* NSObject+RichText.m */; };
-		C58E93AB26312FAC00D1EDB8 /* UIButton+DataBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = C58E93AA26312FAC00D1EDB8 /* UIButton+DataBinding.m */; };
+		C58E9E5626313BA100D1EDB8 /* NSObject+DataBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = C58E9E5426313BA100D1EDB8 /* NSObject+DataBinding.m */; };
 		C5B7BCD62609AAB500BFF168 /* ButtonTimerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B7BCD52609AAB500BFF168 /* ButtonTimerVC.m */; };
 		C5D8D254260CC44000BDAF76 /* toastLoading.gif in Resources */ = {isa = PBXBuildFile; fileRef = C5D8D253260CC44000BDAF76 /* toastLoading.gif */; };
 /* End PBXBuildFile section */
@@ -438,8 +438,8 @@
 		C58D78F826304E9200966F5F /* UILabel+Gesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Gesture.h"; sourceTree = "<group>"; };
 		C58D78FF26304FD600966F5F /* NSObject+RichText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+RichText.h"; sourceTree = "<group>"; };
 		C58D790026304FD600966F5F /* NSObject+RichText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+RichText.m"; sourceTree = "<group>"; };
-		C58E93A926312FAC00D1EDB8 /* UIButton+DataBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+DataBinding.h"; sourceTree = "<group>"; };
-		C58E93AA26312FAC00D1EDB8 /* UIButton+DataBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+DataBinding.m"; sourceTree = "<group>"; };
+		C58E9E5426313BA100D1EDB8 /* NSObject+DataBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DataBinding.m"; sourceTree = "<group>"; };
+		C58E9E5526313BA100D1EDB8 /* NSObject+DataBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DataBinding.h"; sourceTree = "<group>"; };
 		C5B7BCD42609AAB500BFF168 /* ButtonTimerVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonTimerVC.h; sourceTree = "<group>"; };
 		C5B7BCD52609AAB500BFF168 /* ButtonTimerVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonTimerVC.m; sourceTree = "<group>"; };
 		C5D8D253260CC44000BDAF76 /* toastLoading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = toastLoading.gif; sourceTree = "<group>"; };
@@ -750,7 +750,6 @@
 				C58D755D26304A7300966F5F /* 高仿抖音点赞动画 */,
 				C58D756D26304A7300966F5F /* 高仿iOS长按删除+抖动 */,
 				C58D756826304A7300966F5F /* SoundBtn */,
-				C58E93A826312FAC00D1EDB8 /* UIButton+DataBinding */,
 				C58D756126304A7300966F5F /* UIButton+Timer */,
 			);
 			path = UIButton;
@@ -1744,13 +1743,14 @@
 		C58D766526304A7300966F5F /* NSObject */ = {
 			isa = PBXGroup;
 			children = (
-				C58D766626304A7300966F5F /* NSObject+Alert */,
-				C58D766D26304A7300966F5F /* NSObject+Others */,
-				C58D768626304A7300966F5F /* NSObject+DataSave */,
-				C58D768926304A7300966F5F /* NSObject+Time */,
 				C58D768C26304A7300966F5F /* NSObject (Time) */,
-				C58D768F26304A7300966F5F /* NSObject+DefConfig */,
+				C58D766626304A7300966F5F /* NSObject+Alert */,
 				C58D769226304A7300966F5F /* NSObject+CallBackInfoByBlock */,
+				C58E9E5326313BA100D1EDB8 /* NSObject+DataBinding */,
+				C58D768626304A7300966F5F /* NSObject+DataSave */,
+				C58D768F26304A7300966F5F /* NSObject+DefConfig */,
+				C58D766D26304A7300966F5F /* NSObject+Others */,
+				C58D768926304A7300966F5F /* NSObject+Time */,
 			);
 			path = NSObject;
 			sourceTree = "<group>";
@@ -2126,13 +2126,13 @@
 			path = "SelectorBlock/第三方封装/NSObject/NSObject+RichText";
 			sourceTree = SOURCE_ROOT;
 		};
-		C58E93A826312FAC00D1EDB8 /* UIButton+DataBinding */ = {
+		C58E9E5326313BA100D1EDB8 /* NSObject+DataBinding */ = {
 			isa = PBXGroup;
 			children = (
-				C58E93A926312FAC00D1EDB8 /* UIButton+DataBinding.h */,
-				C58E93AA26312FAC00D1EDB8 /* UIButton+DataBinding.m */,
+				C58E9E5426313BA100D1EDB8 /* NSObject+DataBinding.m */,
+				C58E9E5526313BA100D1EDB8 /* NSObject+DataBinding.h */,
 			);
-			path = "UIButton+DataBinding";
+			path = "NSObject+DataBinding";
 			sourceTree = "<group>";
 		};
 		C5B7BCD32609AA8E00BFF168 /* ButtonTimerVC */ = {
@@ -2355,6 +2355,7 @@
 				C58D76B626304A7400966F5F /* UIImage+Overlay.m in Sources */,
 				C58D770426304A7400966F5F /* UITableView+WWFoldableTableView.m in Sources */,
 				C58D775926304AEB00966F5F /* CustomZFPlayerControlView.m in Sources */,
+				C58E9E5626313BA100D1EDB8 /* NSObject+DataBinding.m in Sources */,
 				C58D76B326304A7400966F5F /* UIImage+SYS.m in Sources */,
 				C58D76B226304A7400966F5F /* UIImage+Extras.m in Sources */,
 				C58D76E726304A7400966F5F /* BaseCollectionViewCell.m in Sources */,
@@ -2381,7 +2382,6 @@
 				C58D771A26304A7400966F5F /* NSObject+Sound.m in Sources */,
 				C58D772926304A7400966F5F /* ZYTextField+HistoryDataList.m in Sources */,
 				C58D771F26304A7400966F5F /* NSObject+Time.m in Sources */,
-				C58E93AB26312FAC00D1EDB8 /* UIButton+DataBinding.m in Sources */,
 				C58D771326304A7400966F5F /* BaseCollectionReusableView.m in Sources */,
 				C58D76C926304A7400966F5F /* UIColor+Gradient.m in Sources */,
 				C58D76FE26304A7400966F5F /* LOTAnimationMJRefreshFooter.m in Sources */,
