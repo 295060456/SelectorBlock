@@ -508,11 +508,11 @@
 		C564E58325DE59F90068C203 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				C58D78FE26304FD600966F5F /* NSObject+RichText */,
 				C5B7BCD32609AA8E00BFF168 /* ButtonTimerVC */,
-				C5542FB925F34F6C002D1CA6 /* ViewController */,
 				C5542FBA25F34F76002D1CA6 /* CheckMemFreeVC */,
+				C58D78FE26304FD600966F5F /* NSObject+RichText */,
 				C564E6E125DE5BD10068C203 /* View */,
+				C5542FB925F34F6C002D1CA6 /* ViewController */,
 			);
 			path = UI;
 			sourceTree = "<group>";

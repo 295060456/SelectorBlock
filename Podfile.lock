@@ -34,7 +34,6 @@ PODS:
     - GCDWebServer
     - GCDWebServer/WebDAV
     - GCDWebServer/WebUploader
-  - FBRetainCycleDetector (0.1.4)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -50,10 +49,10 @@ PODS:
     - GKNavigationBar/NavigationBar (= 1.5.2)
   - GKNavigationBar/GestureHandle (1.5.2)
   - GKNavigationBar/NavigationBar (1.5.2)
-  - GKPhotoBrowser (2.1.8):
-    - GKPhotoBrowser/SD (= 2.1.8)
-  - GKPhotoBrowser/Core (2.1.8)
-  - GKPhotoBrowser/SD (2.1.8):
+  - GKPhotoBrowser (2.1.9):
+    - GKPhotoBrowser/SD (= 2.1.9)
+  - GKPhotoBrowser/Core (2.1.9)
+  - GKPhotoBrowser/SD (2.1.9):
     - GKPhotoBrowser/Core
     - SDWebImage (~> 5.0)
   - HXPhotoPicker (3.1.9):
@@ -72,14 +71,14 @@ PODS:
   - PPBadgeView (3.1.0)
   - Reachability (3.2)
   - ReactiveObjC (3.1.1)
-  - SDWebImage (5.10.4):
-    - SDWebImage/Core (= 5.10.4)
-  - SDWebImage/Core (5.10.4)
+  - SDWebImage (5.11.0):
+    - SDWebImage/Core (= 5.11.0)
+  - SDWebImage/Core (5.11.0)
   - SPAlertController (4.0.0)
   - SZTextView (1.3.0)
-  - TABAnimated (2.5.1)
+  - TABAnimated (2.5.4)
   - TXFileOperation (1.0)
-  - WHToast (0.0.7)
+  - WHToast (0.0.8)
   - YYImage (1.0.4):
     - YYImage/Core (= 1.0.4)
   - YYImage/Core (1.0.4)
@@ -99,7 +98,6 @@ DEPENDENCIES:
   - ALProgress
   - BRPickerView
   - DoraemonKit
-  - FBRetainCycleDetector
   - GKNavigationBar
   - GKPhotoBrowser
   - HXPhotoPicker
@@ -133,7 +131,6 @@ SPEC REPOS:
     - ALProgress
     - BRPickerView
     - DoraemonKit
-    - FBRetainCycleDetector
     - FMDB
     - GCDWebServer
     - GKNavigationBar
@@ -166,11 +163,10 @@ SPEC CHECKSUMS:
   ALProgress: 793be069feead2ca7efcb261003dce794fb5970e
   BRPickerView: 9cc11880ac79c4872d081ccb88f306224c1501d7
   DoraemonKit: 32fb97f3aa82efa133111d193080ca5462cef135
-  FBRetainCycleDetector: 46f8179bbb1c587deee3ea838a1a3ee02acf5015
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   GKNavigationBar: 2b86f29aa7fafbda874247529d9fa50a8f7813b7
-  GKPhotoBrowser: 61672c81464a8abb40e81eb802939bca7478a962
+  GKPhotoBrowser: c45231edd9ec79f031c412c646af46419d997c97
   HXPhotoPicker: e1816ff27f17c3926f6e83aebbb9f4b329324f0b
   IJKMediaFramework: f1119f6324c96bc4654f3045a5beaa95ba0596c0
   JobsGlobleDef: 46a851206c10dc3baaf248d6f283aac4dc7fb186
@@ -185,15 +181,15 @@ SPEC CHECKSUMS:
   PPBadgeView: b50a223638970fd0781e8753250385864b6dd2fe
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
-  SDWebImage: c666b97e1fa9c64b4909816a903322018f0a9c84
+  SDWebImage: 7acbb57630ac7db4a495547fb73916ff3e432f6b
   SPAlertController: b245d7a5e17d612da051f2612aca3703f21d108f
   SZTextView: 094dc6acc9beec537685c545d6e3e0d4975174e1
-  TABAnimated: f0bfba5c5c7d279b43cda503d9a5328e7e9891c8
+  TABAnimated: 82d934375ac3034ef4165e2a008413739355f19c
   TXFileOperation: 99bc7e3763678fdea8e8c407e2b87fb18038385f
-  WHToast: 11a17a3f09f5f733e32bd6f3338919a448cbb719
+  WHToast: 5da5bb80bdd1fea9455d4215577d9c5be2c506b8
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   ZFPlayer: f88787c815f7b0801279c42f131a89e2823e669e
 
-PODFILE CHECKSUM: 8dc29a91544f925696fae379414880187c7e4530
+PODFILE CHECKSUM: eaab8fa143a553f9131e770eb0fde3b1c09be028
 
 COCOAPODS: 1.10.1

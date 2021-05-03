@@ -9,7 +9,7 @@ target 'SelectorBlock' do
   pod 'JobsGlobleDef'
   pod 'AFNetworking'
   pod 'DoraemonKit' # https://github.com/didi/DoraemonKit 滴滴打车出的工具
-  pod 'FBRetainCycleDetector' # https://github.com/facebook/FBRetainCycleDetector
+#  pod 'FBRetainCycleDetector' # https://github.com/facebook/FBRetainCycleDetector
   pod 'Masonry'
   pod 'HXPhotoPicker' # 相册选择 https://github.com/SilenceLove/HXPhotoPicker
   pod 'WHToast' # https://github.com/remember17/WHToast 一个轻量级的提示控件，没有任何依赖 NO_SMP
@@ -19,7 +19,7 @@ target 'SelectorBlock' do
   pod 'SDWebImage' # https://github.com/SDWebImage/SDWebImage YES_SMP
   pod 'YYImage'
   pod 'Reachability'  # https://github.com/tonymillion/Reachability 检查联网情况 NO_SMP
-  pod 'PPBadgeView' #https://github.com/jkpang/PPBadgeView iOS自定义Badge组件, 支持UIView, UITabBarItem, UIBarButtonItem以及子类
+  pod 'PPBadgeView' # https://github.com/jkpang/PPBadgeView iOS自定义Badge组件, 支持UIView, UITabBarItem, UIBarButtonItem以及子类
   pod 'MJRefresh' # https://github.com/CoderMJLee/MJRefresh NO_SMP
   pod 'MJExtension'
   pod 'LYEmptyView' # https://github.com/dev-liyang/LYEmptyView iOS一行代码集成空白页面占位图(无数据、无网络占位图)
