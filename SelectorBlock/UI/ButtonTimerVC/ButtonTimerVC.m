@@ -132,40 +132,28 @@
     
     NSMutableArray *tempDataMutArr = NSMutableArray.array;
     
-    {
-        RichLabelDataStringsModel *title_1_Model = RichLabelDataStringsModel.new;
-        title_1_Model.subString = @"我";
-        title_1_Model.cor = UIColor.redColor;
-        title_1_Model.font = [UIFont systemFontOfSize:10 weight:UIFontWeightRegular];
-        [tempDataMutArr addObject:title_1_Model];
-    }
-
-    {
-        RichLabelDataStringsModel *title_2_Model = RichLabelDataStringsModel.new;
-        title_2_Model.subString = @"爱";
-        title_2_Model.cor = UIColor.blueColor;
-        title_2_Model.font = [UIFont systemFontOfSize:15 weight:UIFontWeightThin];
-        [tempDataMutArr addObject:title_2_Model];
-    }
-
-    {
-        RichLabelDataStringsModel *title_3_Model = RichLabelDataStringsModel.new;
-        title_3_Model.subString = @"北京";
-        title_3_Model.cor = UIColor.brownColor;
-        title_3_Model.font = [UIFont systemFontOfSize:17 weight:UIFontWeightBlack];
-        [tempDataMutArr addObject:title_3_Model];
-    }
+    RichTextConfig *config_01 = RichTextConfig.new;
+    config_01.font = [UIFont systemFontOfSize:10 weight:UIFontWeightRegular];
+    config_01.cor = UIColor.redColor;
+    config_01.targetString = @"我";
     
-    {
-        RichLabelDataStringsModel *title_4_Model = RichLabelDataStringsModel.new;
-        title_4_Model.subString = @"wgoole.cn";
-        title_4_Model.urlStr = @"werejofn";
-        title_4_Model.cor = UIColor.greenColor;
-        title_4_Model.font = [UIFont systemFontOfSize:19 weight:UIFontWeightMedium];
-        [tempDataMutArr addObject:title_4_Model];
-    }
+    RichTextConfig *config_02 = RichTextConfig.new;
+    config_02.font = [UIFont systemFontOfSize:15 weight:UIFontWeightThin];
+    config_02.cor = UIColor.blueColor;
+    config_02.targetString = @"爱";
+    
+    RichTextConfig *config_03 = RichTextConfig.new;
+    config_03.font = [UIFont systemFontOfSize:17 weight:UIFontWeightBlack];
+    config_03.cor = UIColor.brownColor;
+    config_03.targetString = @"北京";
+    
+    RichTextConfig *config_04 = RichTextConfig.new;
+    config_04.font = [UIFont systemFontOfSize:19 weight:UIFontWeightMedium];
+    config_04.cor = UIColor.greenColor;
+    config_04.urlStr = @"werejofn";
+    config_04.targetString = @"wgoole.cn";
 
-    return [NSObject makeRichTextWithDataConfigMutArr:tempDataMutArr];
+    return [NSObject richTextWithDataConfigMutArr:@[config_01,config_02,config_03,config_04]];
 }
 /*
  定时器相关方法在btn和其配置文件中均对外表达抛出
