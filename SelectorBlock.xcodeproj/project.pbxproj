@@ -153,6 +153,7 @@
 		C58D78F926304E9200966F5F /* UILabel+Gesture.m in Sources */ = {isa = PBXBuildFile; fileRef = C58D78F726304E9200966F5F /* UILabel+Gesture.m */; };
 		C58D790126304FD600966F5F /* NSObject+RichText.m in Sources */ = {isa = PBXBuildFile; fileRef = C58D790026304FD600966F5F /* NSObject+RichText.m */; };
 		C58E9E5626313BA100D1EDB8 /* NSObject+DataBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = C58E9E5426313BA100D1EDB8 /* NSObject+DataBinding.m */; };
+		C5B5CB0426666BE400264958 /* BaseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B5CB0326666BE400264958 /* BaseButton.m */; };
 		C5B7BCD62609AAB500BFF168 /* ButtonTimerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B7BCD52609AAB500BFF168 /* ButtonTimerVC.m */; };
 		C5D8D254260CC44000BDAF76 /* toastLoading.gif in Resources */ = {isa = PBXBuildFile; fileRef = C5D8D253260CC44000BDAF76 /* toastLoading.gif */; };
 /* End PBXBuildFile section */
@@ -440,6 +441,9 @@
 		C58D790026304FD600966F5F /* NSObject+RichText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+RichText.m"; sourceTree = "<group>"; };
 		C58E9E5426313BA100D1EDB8 /* NSObject+DataBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DataBinding.m"; sourceTree = "<group>"; };
 		C58E9E5526313BA100D1EDB8 /* NSObject+DataBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DataBinding.h"; sourceTree = "<group>"; };
+		C5B5CB0026666BDB00264958 /* BaseButtonProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseButtonProtocol.h; sourceTree = "<group>"; };
+		C5B5CB0226666BE400264958 /* BaseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseButton.h; sourceTree = "<group>"; };
+		C5B5CB0326666BE400264958 /* BaseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseButton.m; sourceTree = "<group>"; };
 		C5B7BCD42609AAB500BFF168 /* ButtonTimerVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonTimerVC.h; sourceTree = "<group>"; };
 		C5B7BCD52609AAB500BFF168 /* ButtonTimerVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonTimerVC.m; sourceTree = "<group>"; };
 		C5D8D253260CC44000BDAF76 /* toastLoading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = toastLoading.gif; sourceTree = "<group>"; };
@@ -749,6 +753,7 @@
 				C58D755926304A7300966F5F /* 高度自定义的按钮 */,
 				C58D755D26304A7300966F5F /* 高仿抖音点赞动画 */,
 				C58D756D26304A7300966F5F /* 高仿iOS长按删除+抖动 */,
+				C5B5CB0126666BE400264958 /* BaseButton */,
 				C58D756826304A7300966F5F /* SoundBtn */,
 				C58D756126304A7300966F5F /* UIButton+Timer */,
 			);
@@ -1917,6 +1922,7 @@
 		C58D769526304A7400966F5F /* BaseProtocol */ = {
 			isa = PBXGroup;
 			children = (
+				C5B5CB0026666BDB00264958 /* BaseButtonProtocol.h */,
 				C58D769626304A7400966F5F /* BaseViewControllerProtocol.h */,
 				C58D769726304A7400966F5F /* BaseCellProtocol.h */,
 				C58D769826304A7400966F5F /* BaseViewProtocol.h */,
@@ -2133,6 +2139,15 @@
 				C58E9E5526313BA100D1EDB8 /* NSObject+DataBinding.h */,
 			);
 			path = "NSObject+DataBinding";
+			sourceTree = "<group>";
+		};
+		C5B5CB0126666BE400264958 /* BaseButton */ = {
+			isa = PBXGroup;
+			children = (
+				C5B5CB0226666BE400264958 /* BaseButton.h */,
+				C5B5CB0326666BE400264958 /* BaseButton.m */,
+			);
+			path = BaseButton;
 			sourceTree = "<group>";
 		};
 		C5B7BCD32609AA8E00BFF168 /* ButtonTimerVC */ = {
@@ -2406,6 +2421,7 @@
 				C5B7BCD62609AAB500BFF168 /* ButtonTimerVC.m in Sources */,
 				C58D772026304A7400966F5F /* TimeModel.m in Sources */,
 				C58D76DE26304A7400966F5F /* UITextView+IndicateWordLimit.m in Sources */,
+				C5B5CB0426666BE400264958 /* BaseButton.m in Sources */,
 				C58D790126304FD600966F5F /* NSObject+RichText.m in Sources */,
 				C58D76CD26304A7400966F5F /* UIView+ZFPlayer.m in Sources */,
 				C5542FBD25F34F76002D1CA6 /* CheckMemFreeVC.m in Sources */,
